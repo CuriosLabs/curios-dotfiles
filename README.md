@@ -7,4 +7,8 @@ This is CuriOS opinionated configurations files to set up a [COSMIC desktop envi
 Those dotfiles are meant to be installed as a NixOS package. See `pkgs/curios-dotfiles/default.nix`. It comes pre-installed with [CuriOS](https://github.com/CuriosLabs/CuriOS).
 
 ## Features:
- **TBD**
+
+- COSMIC Desktop environment configuration files.
+- Alacritty terminal theme.
+- `btop` custom configuration.
+- LazyVim default starter configuration files.
