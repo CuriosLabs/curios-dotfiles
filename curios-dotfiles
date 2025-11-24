@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Install script for CuriOS dotfiles as an NixOS package.
-# This script install the dotfiles from https://github.com/CuriosLabs/nixos-dotfiles
+# This script install the dotfiles from https://github.com/CuriosLabs/curios-dotfiles
 # Made for Linux and a COSMIC desktop environment.
 
 set -eu
@@ -90,7 +90,7 @@ fi
 printf "\e[32m Installing CuriosLabs dotfiles...\e[0m\n"
 
 #------------- Check curios-dotfiles files
-curios_dotfiles_path=$(nix-store --query --outputs $(which curios-dotfiles))
+curios_dotfiles_path=$(nix-store --query --outputs "$(which curios-dotfiles)")
 curios_dotfiles_path=$(realpath "$curios_dotfiles_path"/share)
 
 if [ ! -d "$curios_dotfiles_path" ]; then

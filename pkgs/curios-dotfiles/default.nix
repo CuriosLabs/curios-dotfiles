@@ -8,9 +8,9 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchFromGitHub {
     owner = "CuriosLabs";
-    repo = "nixos-dotfiles";
+    repo = "curios-dotfiles";
     rev = version;
-    hash = "sha256-QwRt/qz1DPz/0jsi5eJ93v6qiTqdZRyow1Ijomm66Cs=";
+    hash = "";
   };
 
   dontPatch = true;
@@ -31,7 +31,7 @@ stdenvNoCC.mkDerivation rec {
 
   meta = {
     description = "COSMIC Desktop Environment configuration files for CuriOS";
-    homepage = "https://github.com/CuriosLabs/nixos-dotfiles";
+    homepage = "https://github.com/CuriosLabs/curios-dotfiles";
     license = lib.licenses.gpl3Only;
     platforms = lib.platforms.linux;
   };
