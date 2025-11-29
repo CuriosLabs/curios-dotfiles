@@ -36,6 +36,17 @@
         ),
     ),
     (
+        name: "Finance",
+        icon: "folder-symbolic",
+        filter: Categories(
+            categories: [
+                "Finance",
+            ],
+            exclude: [],
+            include: [],
+        ),
+    ),
+    (
         name: "AI",
         icon: "folder-symbolic",
         filter: Categories(
