@@ -188,6 +188,9 @@ eval "$(fzf --zsh)"
 # zoxide integration
 eval "$(zoxide init --cmd cd zsh)"
 
+# Add npm local bin folder to $PATH
+export PATH="$HOME/.npm-packages/bin:$PATH"
+
 # Logo animation on launch
 if [ -f /etc/nixos/logo.txt ]; then
   tte -i /etc/nixos/logo.txt --anchor-text c --canvas-width 0 sweep --final-gradient-stops 12488B 2AA1B3 --final-gradient-steps 12 12 --final-gradient-direction diagonal

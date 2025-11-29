@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.7";
+readonly SCRIPT_VERSION="0.8";
 VERBOSE=0;
 LOCALE_KEYBOARD="us";
 SCRIPT_PATH="$(dirname "$0")"
@@ -103,10 +103,12 @@ if [ $VERBOSE -eq 1 ]; then
 fi
 
 #------------- Copying dotfiles into INSTALL_DIR
+install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.npmrc
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc-ai.plugin.zsh
 cp -r "$curios_dotfiles_path"/.config/ "$INSTALL_DIR"
 chmod -R u+w "$INSTALL_DIR"/.config/
+mkdir -p "$INSTALL_DIR"/.npm-packages
 
 #------------- Update COSMIC keyboard layout
 sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
