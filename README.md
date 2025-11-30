@@ -12,3 +12,4 @@ Those dotfiles are meant to be installed as a NixOS package. See `pkgs/curios-do
 - Alacritty terminal theme.
 - `btop` custom configuration.
 - LazyVim default starter configuration files.
+- npm user configuration file.

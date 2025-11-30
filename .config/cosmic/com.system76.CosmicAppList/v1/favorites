@@ -4,5 +4,5 @@
     "Alacritty",
     "brave-browser",
     "signal",
-    "com.yubico.authenticator",
+    "com.yubico.yubioath",
 ]
