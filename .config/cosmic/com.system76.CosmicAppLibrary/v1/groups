@@ -59,6 +59,17 @@
         ),
     ),
     (
+        name: "Games",
+        icon: "folder-symbolic",
+        filter: Categories(
+            categories: [
+                "Game",
+            ],
+            exclude: [],
+            include: [],
+        ),
+    ),
+    (
         name: "Networks",
         icon: "folder-symbolic",
         filter: Categories(
