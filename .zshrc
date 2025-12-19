@@ -19,7 +19,7 @@ alias update="sudo nixos-rebuild switch --upgrade && flatpak update -y"	    # Ni
 alias cool="fastfetch"                                                      # I always forget about this command name
 alias rm="rm -I"                                                            # Better be safe
 # Modern terminal tools
-alias ls="eza -l"
+alias ls="eza -l --icons=auto"
 alias cat="bat"
 alias top="btop"
 alias df="duf"
@@ -190,6 +190,11 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Add npm local bin folder to $PATH
 export PATH="$HOME/.npm-packages/bin:$PATH"
+
+# source env default file
+if [ -f "$HOME/.env" ]; then
+  source "$HOME/.env"
+fi
 
 # Logo animation on launch
 if [ -f /etc/nixos/logo.txt ]; then
