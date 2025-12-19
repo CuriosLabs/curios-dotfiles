@@ -7,20 +7,19 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.9";
-VERBOSE=0;
-LOCALE_KEYBOARD="us";
+readonly SCRIPT_VERSION="0.11"
+VERBOSE=0
+LOCALE_KEYBOARD="us"
 SCRIPT_PATH="$(dirname "$0")"
 
 #------------- Print help function
-usage ()
-{
+usage() {
   echo -e "
 Usage: curios-dotfiles [options] <directory>
   Where,
-    directory: Valid directory to copy the dotfiles into, like '/home/<user>' or '/etc/skel'.";
+    directory: Valid directory to copy the dotfiles into, like '/home/<user>' or '/etc/skel'."
 
-  cat << EOF
+  cat <<EOF
 
   Options:
      -h, --help         Print this message.
@@ -34,14 +33,14 @@ Usage: curios-dotfiles [options] <directory>
     Install as a skeleton for future user home directory:
       curios-dotfiles /etc/skel/
 EOF
-  exit;
+  exit
 }
 
 #------------- Scripts arguments parse options
 ARGS=$(getopt --longoptions="verbose,version,help,lang:" --name "$0" --options ":hv" -- "$@")
 if [ $# -lt 1 ]; then
   usage
-fi;
+fi
 
 INSTALL_DIR="${!#}"
 
@@ -49,28 +48,28 @@ eval set -- "$ARGS"
 
 while true; do
   case "$1" in
-    -v | --verbose)
-      VERBOSE=1
-      shift
-      ;;
-    -h | --help)
-      usage
-      ;;
-    --lang)
-      LOCALE_KEYBOARD="$2"
-      shift 2
-      ;;
-    --version)
-      echo "$SCRIPT_VERSION"
-      exit 0
-      ;;
-    --)
-      shift
-      break
-      ;;
-    *)
-      break
-      ;;
+  -v | --verbose)
+    VERBOSE=1
+    shift
+    ;;
+  -h | --help)
+    usage
+    ;;
+  --lang)
+    LOCALE_KEYBOARD="$2"
+    shift 2
+    ;;
+  --version)
+    echo "$SCRIPT_VERSION"
+    exit 0
+    ;;
+  --)
+    shift
+    break
+    ;;
+  *)
+    break
+    ;;
   esac
 done
 
