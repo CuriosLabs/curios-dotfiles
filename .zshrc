@@ -1,4 +1,4 @@
-# © 2025 David BASTIEN
+# © 2025-2026 David BASTIEN
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -200,3 +200,12 @@ fi
 if [ -f /etc/nixos/logo.txt ]; then
   tte -i /etc/nixos/logo.txt --anchor-text c --canvas-width 0 sweep --final-gradient-stops 12488B 2AA1B3 --final-gradient-steps 12 12 --final-gradient-direction diagonal
 fi
+
+# Automated list directory with eza after a cd command.
+function cd() {
+  new_directory="$*";
+  if [ $# -eq 0 ]; then
+    new_directory=${HOME}
+  fi
+  builtin cd "${new_directory}" && /usr/bin/env eza -l --icons=auto
+}
