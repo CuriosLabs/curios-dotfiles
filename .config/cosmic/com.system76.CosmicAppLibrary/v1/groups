@@ -70,6 +70,17 @@
         ),
     ),
     (
+        name: "Studio",
+        icon: "folder-symbolic",
+        filter: Categories(
+            categories: [
+                "AudioVideoEditing",
+            ],
+            exclude: [],
+            include: [],
+        ),
+    ),
+    (
         name: "Networks",
         icon: "folder-symbolic",
         filter: Categories(
