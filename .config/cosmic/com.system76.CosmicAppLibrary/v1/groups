@@ -74,6 +74,7 @@
         icon: "folder-symbolic",
         filter: Categories(
             categories: [
+                "AudioVideo",
                 "AudioVideoEditing",
             ],
             exclude: [],
