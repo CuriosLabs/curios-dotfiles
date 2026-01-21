@@ -19,13 +19,15 @@ stdenvNoCC.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p  $out/bin/
-    mkdir -p  $out/share/
+    mkdir -p $out/bin/
+    mkdir -p $out/share/
+    mkdir -p $out/share/backgrounds/curios/
     install -D -m 555 -t $out/bin/ curios-dotfiles
     cp -r .config/ $out/share/
     install -D -m 644 -t $out/share/ .npmrc
     install -D -m 644 -t $out/share/ .zshrc
     install -D -m 644 -t $out/share/ .zshrc-ai.plugin.zsh
+    install -D -m 444 -t $out/share/backgrounds/curios/ wallpapers/*.jpg
 
     runHook postInstall
   '';
