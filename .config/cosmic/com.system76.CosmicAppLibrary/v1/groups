@@ -70,6 +70,24 @@
         ),
     ),
     (
+        name: "Studio",
+        icon: "folder-symbolic",
+        filter: Categories(
+            categories: [
+                "Audio",
+                "Video",
+                "AudioVideo",
+                "AudioVideoEditing",
+                "Graphics",
+                "2DGraphics",
+                "3DGraphics",
+                "Photography",
+            ],
+            exclude: [],
+            include: [],
+        ),
+    ),
+    (
         name: "Networks",
         icon: "folder-symbolic",
         filter: Categories(
