@@ -191,6 +191,10 @@ eval "$(zoxide init --cmd cd zsh)"
 # Add npm local bin folder to $PATH
 export PATH="$HOME/.npm-packages/bin:$PATH"
 
+# Add local bin folder to $PATH
+mkdir -p "$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
 # source env default file
 if [ -f "$HOME/.env" ]; then
   source "$HOME/.env"
