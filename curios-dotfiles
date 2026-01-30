@@ -104,7 +104,6 @@ fi
 #------------- Copying dotfiles into INSTALL_DIR
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.npmrc
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc
-install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc-ai.plugin.zsh
 cp -r "$curios_dotfiles_path"/.config/ "$INSTALL_DIR"
 chmod -R u+w "$INSTALL_DIR"/.config/
 mkdir -p "$INSTALL_DIR"/.npm-packages

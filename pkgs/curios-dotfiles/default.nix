@@ -10,7 +10,7 @@ stdenvNoCC.mkDerivation rec {
     owner = "CuriosLabs";
     repo = "curios-dotfiles";
     rev = version;
-    hash = "sha256-C64CZ4AG6uQUly9FGCKE3bcaI6PvlsFN477sL25P1os=";
+    hash = "";
   };
 
   dontPatch = true;
@@ -26,7 +26,6 @@ stdenvNoCC.mkDerivation rec {
     cp -r .config/ $out/share/
     install -D -m 644 -t $out/share/ .npmrc
     install -D -m 644 -t $out/share/ .zshrc
-    install -D -m 644 -t $out/share/ .zshrc-ai.plugin.zsh
     install -D -m 444 -t $out/share/backgrounds/curios/ wallpapers/*.jpg
 
     runHook postInstall
