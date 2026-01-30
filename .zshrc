@@ -176,10 +176,6 @@ bindkey '^p' history-search-backward # search through history based on completio
 bindkey '^n' history-search-forward
 
 # Shell integrations
-# Ollama AI plugin, bound to Ctrl+i
-if [ -f ~/.zshrc-ai.plugin.zsh ]; then
-    source ~/.zshrc-ai.plugin.zsh
-fi
 
 # fzf integration
 # by default, it is bound to Ctrl+r
