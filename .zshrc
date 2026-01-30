@@ -176,10 +176,6 @@ bindkey '^p' history-search-backward # search through history based on completio
 bindkey '^n' history-search-forward
 
 # Shell integrations
-# Ollama AI plugin, bound to Ctrl+i
-if [ -f ~/.zshrc-ai.plugin.zsh ]; then
-    source ~/.zshrc-ai.plugin.zsh
-fi
 
 # fzf integration
 # by default, it is bound to Ctrl+r
@@ -190,6 +186,10 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Add npm local bin folder to $PATH
 export PATH="$HOME/.npm-packages/bin:$PATH"
+
+# Add local bin folder to $PATH
+mkdir -p "$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
 # source env default file
 if [ -f "$HOME/.env" ]; then
