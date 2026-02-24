@@ -55,4 +55,3 @@ the hash signature for the Nix package:
   ```
 
 - **Supported Version**: NixOS 25.11 or later.
-
