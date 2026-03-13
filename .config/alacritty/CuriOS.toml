@@ -24,10 +24,10 @@ style = "Italic"
 family = "JetBrains Mono"
 style = "Regular"
 
-# GNOME terminal Dark
+# Inspired by GNOME terminal Dark
 [colors.primary]
-background = '#212121'
-foreground = '#d0cfcc'
+background = '#20252c'
+foreground = '#a1a9b7'
 
 [colors.normal]
 black = '#171421'
