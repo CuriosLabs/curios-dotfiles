@@ -1,4 +1,4 @@
-# Custom alacritty terminal configuration
+# Custom alacritty theme - Kanagawa
 [terminal]
 shell = "/run/current-system/sw/bin/zsh"
 
