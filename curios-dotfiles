@@ -43,8 +43,45 @@ EOF
 apply_theme() {
   local theme_name="$1"
   local install_dir="$2"
+  local nvim_theme=""
+  local tui_theme=""
 
   printf "\e[32m Applying theme: %s...\e[0m\n" "$theme_name"
+
+  case "$theme_name" in
+  Catppuccin-Macchiato)
+    nvim_theme="catppuccin-macchiato"
+    tui_theme="catppuccin-macchiato"
+    ;;
+  Everforest-Medium)
+    nvim_theme="everforest"
+    tui_theme="everforest"
+    ;;
+  Gruvbox-Dark)
+    nvim_theme="gruvbox"
+    tui_theme="gruvbox"
+    ;;
+  Hackers-Green)
+    nvim_theme="melange"
+    tui_theme="matrix"
+    ;;
+  Kanagawa)
+    nvim_theme="kanagawa"
+    tui_theme="kanagawa"
+    ;;
+  Nord-Dark | Nord-Light)
+    nvim_theme="nord"
+    tui_theme="nord"
+    ;;
+  One-Dark)
+    nvim_theme="onedark"
+    tui_theme="one-dark"
+    ;;
+  Tokyonight)
+    nvim_theme="tokyonight"
+    tui_theme="tokyonight"
+    ;;
+  esac
 
   # 1. Alacritty
   if [ -f "$install_dir/.config/alacritty/$theme_name.toml" ]; then
@@ -52,27 +89,22 @@ apply_theme() {
   fi
 
   # 2. opencode tui.json
-  # Convert to lowercase
-  local tui_theme=$(echo "$theme_name" | tr '[:upper:]' '[:lower:]')
   if [ -f "$install_dir/.config/opencode/tui.json" ]; then
     sed -i "s/\"theme\": \".*\"/\"theme\": \"$tui_theme\"/" "$install_dir/.config/opencode/tui.json"
   fi
 
   # 3. Neovim
-  local nvim_theme=""
-  case "$theme_name" in
-    Catppuccin-Macchiato) nvim_theme="catppuccin" ;;
-    Everforest-Medium)    nvim_theme="everforest" ;;
-    Gruvbox-Dark)         nvim_theme="gruvbox" ;;
-    Hackers-Green)        nvim_theme="melange" ;;
-    Kanagawa)             nvim_theme="kanagawa" ;;
-    Nord-Dark|Nord-Light) nvim_theme="nord" ;;
-    One-Dark)             nvim_theme="onedark" ;;
-    Tokyonight)           nvim_theme="tokyonight" ;;
-  esac
-
   if [ -n "$nvim_theme" ] && [ -f "$install_dir/.config/nvim/lua/plugins/colorschemes.lua" ]; then
     sed -i "s/colorscheme = \".*\"/colorscheme = \"$nvim_theme\"/" "$install_dir/.config/nvim/lua/plugins/colorschemes.lua"
+  fi
+
+  # 4. Zed
+  if [ -f "$install_dir/.config/zed/settings.json" ]; then
+    if [ "$theme_name" == "Nord-Light" ]; then
+      sed -i "s/\"light\": \".*\"/\"light\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
+    else
+      sed -i "s/\"dark\": \".*\"/\"dark\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
+    fi
   fi
 }
 
@@ -136,18 +168,20 @@ if [ ! -d "$INSTALL_DIR" ]; then
   exit 2
 fi
 
-if [ $VERBOSE -eq 1 ]; then
-  echo "path: $SCRIPT_PATH"
-  echo "<directory>: $INSTALL_DIR"
-  echo "--lang: $LOCALE_KEYBOARD"
-  echo "--verbose: $VERBOSE"
-fi
-
 printf "\e[32m Installing CuriosLabs dotfiles...\e[0m\n"
 
 #------------- Check curios-dotfiles files
 curios_dotfiles_path=$(nix-store --query --outputs "$(which curios-dotfiles)")
 curios_dotfiles_path=$(realpath "$curios_dotfiles_path"/share)
+
+if [ $VERBOSE -eq 1 ]; then
+  echo "path: $SCRIPT_PATH"
+  echo "curios_dotfiles_path: $curios_dotfiles_path"
+  echo "<directory>: $INSTALL_DIR"
+  echo "--lang: $LOCALE_KEYBOARD"
+  echo "--themes: $SELECTED_THEME"
+  echo "--verbose: $VERBOSE"
+fi
 
 if [ ! -d "$curios_dotfiles_path" ]; then
   printf "\e[31m curios-dotfiles package not found!\e[0m\n"
@@ -167,12 +201,14 @@ mkdir -p "$INSTALL_DIR"/.config/btop/
 mkdir -p "$INSTALL_DIR"/.config/cosmic/
 mkdir -p "$INSTALL_DIR"/.config/nvim/
 mkdir -p "$INSTALL_DIR"/.config/opencode/
+mkdir -p "$INSTALL_DIR"/.config/zed/themes/
 
-cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
-cp -rn "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
+#cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
+#cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
+#cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
+#cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
+#cp -rn "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
+#cp -r "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
 
 chmod -R u+w "$INSTALL_DIR"/.config/
 mkdir -p "$INSTALL_DIR"/.npm-packages

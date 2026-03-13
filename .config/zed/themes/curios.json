@@ -1,0 +1,258 @@
+{
+  "name": "CuriOS",
+  "author": "CuriosLabs",
+  "themes": [
+    {
+      "name": "Catppuccin-Macchiato",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#24273a",
+          "editor.foreground": "#cad3f5",
+          "terminal.background": "#24273a",
+          "terminal.foreground": "#cad3f5",
+          "terminal.ansi.black": "#494d64",
+          "terminal.ansi.red": "#ed8796",
+          "terminal.ansi.green": "#a6da95",
+          "terminal.ansi.yellow": "#eed49f",
+          "terminal.ansi.blue": "#8aadf4",
+          "terminal.ansi.magenta": "#f5bde6",
+          "terminal.ansi.cyan": "#8bd5ca",
+          "terminal.ansi.white": "#b8c0e0",
+          "terminal.ansi.bright_black": "#5b6078",
+          "terminal.ansi.bright_red": "#ed8796",
+          "terminal.ansi.bright_green": "#a6da95",
+          "terminal.ansi.bright_yellow": "#eed49f",
+          "terminal.ansi.bright_blue": "#8aadf4",
+          "terminal.ansi.bright_magenta": "#f5bde6",
+          "terminal.ansi.bright_cyan": "#8bd5ca",
+          "terminal.ansi.bright_white": "#a5adcb"
+        }
+      }
+    },
+    {
+      "name": "Everforest-Medium",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#2d353b",
+          "editor.foreground": "#d3c6aa",
+          "terminal.background": "#2d353b",
+          "terminal.foreground": "#d3c6aa",
+          "terminal.ansi.black": "#303030",
+          "terminal.ansi.red": "#fda1a0",
+          "terminal.ansi.green": "#92cf9c",
+          "terminal.ansi.yellow": "#f7e062",
+          "terminal.ansi.blue": "#63d0df",
+          "terminal.ansi.magenta": "#e79cfe",
+          "terminal.ansi.cyan": "#a1c0eb",
+          "terminal.ansi.white": "#c6c6c6",
+          "terminal.ansi.bright_black": "#5e5e5e",
+          "terminal.ansi.bright_red": "#ffa090",
+          "terminal.ansi.bright_green": "#5edb8c",
+          "terminal.ansi.bright_yellow": "#f7e062",
+          "terminal.ansi.bright_blue": "#63d0df",
+          "terminal.ansi.bright_magenta": "#e79cfe",
+          "terminal.ansi.bright_cyan": "#a1c0eb",
+          "terminal.ansi.bright_white": "#ffffff"
+        }
+      }
+    },
+    {
+      "name": "Gruvbox-Dark",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#282828",
+          "editor.foreground": "#ebdbb2",
+          "terminal.background": "#282828",
+          "terminal.foreground": "#ebdbb2",
+          "terminal.ansi.black": "#282828",
+          "terminal.ansi.red": "#cc241d",
+          "terminal.ansi.green": "#98971a",
+          "terminal.ansi.yellow": "#d79921",
+          "terminal.ansi.blue": "#458588",
+          "terminal.ansi.magenta": "#b16286",
+          "terminal.ansi.cyan": "#689d6a",
+          "terminal.ansi.white": "#a89984",
+          "terminal.ansi.bright_black": "#928374",
+          "terminal.ansi.bright_red": "#fb4934",
+          "terminal.ansi.bright_green": "#b8bb26",
+          "terminal.ansi.bright_yellow": "#fabd2f",
+          "terminal.ansi.bright_blue": "#83a598",
+          "terminal.ansi.bright_magenta": "#d3869b",
+          "terminal.ansi.bright_cyan": "#8ec07c",
+          "terminal.ansi.bright_white": "#ebdbb2"
+        }
+      }
+    },
+    {
+      "name": "Hackers-Green",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#000000",
+          "editor.foreground": "#11FF00",
+          "terminal.background": "#000000",
+          "terminal.foreground": "#11FF00",
+          "terminal.ansi.black": "#1B1B1B",
+          "terminal.ansi.red": "#FFB5B5",
+          "terminal.ansi.green": "#ACF7D2",
+          "terminal.ansi.yellow": "#FFF19E",
+          "terminal.ansi.blue": "#94FF00",
+          "terminal.ansi.magenta": "#CF7DFF",
+          "terminal.ansi.cyan": "#48B9C7",
+          "terminal.ansi.white": "#E2E2E2",
+          "terminal.ansi.bright_black": "#5E5E5E",
+          "terminal.ansi.bright_red": "#FFA090",
+          "terminal.ansi.bright_green": "#5EDB8C",
+          "terminal.ansi.bright_yellow": "#F7E062",
+          "terminal.ansi.bright_blue": "#94FF00",
+          "terminal.ansi.bright_magenta": "#CF7DFF",
+          "terminal.ansi.bright_cyan": "#48B9C7",
+          "terminal.ansi.bright_white": "#FFFFFF"
+        }
+      }
+    },
+    {
+      "name": "Kanagawa",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#1f1f28",
+          "editor.foreground": "#dcd7ba",
+          "terminal.background": "#1f1f28",
+          "terminal.foreground": "#dcd7ba",
+          "terminal.ansi.black": "#090618",
+          "terminal.ansi.red": "#c34043",
+          "terminal.ansi.green": "#76946a",
+          "terminal.ansi.yellow": "#c0a36e",
+          "terminal.ansi.blue": "#7e9cd8",
+          "terminal.ansi.magenta": "#957fb8",
+          "terminal.ansi.cyan": "#6a9589",
+          "terminal.ansi.white": "#c8c093",
+          "terminal.ansi.bright_black": "#727169",
+          "terminal.ansi.bright_red": "#e82424",
+          "terminal.ansi.bright_green": "#98bb6c",
+          "terminal.ansi.bright_yellow": "#e6c384",
+          "terminal.ansi.bright_blue": "#7fb4ca",
+          "terminal.ansi.bright_magenta": "#938aa9",
+          "terminal.ansi.bright_cyan": "#7aa89f",
+          "terminal.ansi.bright_white": "#dcd7ba"
+        }
+      }
+    },
+    {
+      "name": "Nord-Dark",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#2E3440",
+          "editor.foreground": "#D8DEE9",
+          "terminal.background": "#2E3440",
+          "terminal.foreground": "#D8DEE9",
+          "terminal.ansi.black": "#3B4252",
+          "terminal.ansi.red": "#BF616A",
+          "terminal.ansi.green": "#A3BE8C",
+          "terminal.ansi.yellow": "#EBCB8B",
+          "terminal.ansi.blue": "#81A1C1",
+          "terminal.ansi.magenta": "#B48EAD",
+          "terminal.ansi.cyan": "#88C0D0",
+          "terminal.ansi.white": "#E5E9F0",
+          "terminal.ansi.bright_black": "#4C566A",
+          "terminal.ansi.bright_red": "#BF616A",
+          "terminal.ansi.bright_green": "#A3BE8C",
+          "terminal.ansi.bright_yellow": "#EBCB8B",
+          "terminal.ansi.bright_blue": "#81A1C1",
+          "terminal.ansi.bright_magenta": "#B48EAD",
+          "terminal.ansi.bright_cyan": "#8FBCBB",
+          "terminal.ansi.bright_white": "#ECEFF4"
+        }
+      }
+    },
+    {
+      "name": "Nord-Light",
+      "appearance": "light",
+      "style": {
+        "colors": {
+          "editor.background": "#eceff4",
+          "editor.foreground": "#2e3440",
+          "terminal.background": "#eceff4",
+          "terminal.foreground": "#2e3440",
+          "terminal.ansi.black": "#3b4252",
+          "terminal.ansi.red": "#a0252b",
+          "terminal.ansi.green": "#3b6e43",
+          "terminal.ansi.yellow": "#966800",
+          "terminal.ansi.blue": "#00496d",
+          "terminal.ansi.magenta": "#68217c",
+          "terminal.ansi.cyan": "#00525a",
+          "terminal.ansi.white": "#e5e9f0",
+          "terminal.ansi.bright_black": "#4c566a",
+          "terminal.ansi.bright_red": "#bf616a",
+          "terminal.ansi.bright_green": "#a3be8c",
+          "terminal.ansi.bright_yellow": "#ebcb8b",
+          "terminal.ansi.bright_blue": "#81a1c1",
+          "terminal.ansi.bright_magenta": "#b48ead",
+          "terminal.ansi.bright_cyan": "#8fbcbb",
+          "terminal.ansi.bright_white": "#eceff4"
+        }
+      }
+    },
+    {
+      "name": "One-Dark",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#20252c",
+          "editor.foreground": "#a1a9b7",
+          "terminal.background": "#20252c",
+          "terminal.foreground": "#a1a9b7",
+          "terminal.ansi.black": "#171421",
+          "terminal.ansi.red": "#c01c28",
+          "terminal.ansi.green": "#26a269",
+          "terminal.ansi.yellow": "#a2734c",
+          "terminal.ansi.blue": "#12488b",
+          "terminal.ansi.magenta": "#a347ba",
+          "terminal.ansi.cyan": "#2aa1b3",
+          "terminal.ansi.white": "#d0cfcc",
+          "terminal.ansi.bright_black": "#5e5c64",
+          "terminal.ansi.bright_red": "#f66151",
+          "terminal.ansi.bright_green": "#33d17a",
+          "terminal.ansi.bright_yellow": "#e9ad0c",
+          "terminal.ansi.bright_blue": "#2a7bde",
+          "terminal.ansi.bright_magenta": "#ff06b5",
+          "terminal.ansi.bright_cyan": "#33c7de",
+          "terminal.ansi.bright_white": "#ffffff"
+        }
+      }
+    },
+    {
+      "name": "Tokyonight",
+      "appearance": "dark",
+      "style": {
+        "colors": {
+          "editor.background": "#1a1b26",
+          "editor.foreground": "#c0caf5",
+          "terminal.background": "#1a1b26",
+          "terminal.foreground": "#c0caf5",
+          "terminal.ansi.black": "#15161E",
+          "terminal.ansi.red": "#f7768e",
+          "terminal.ansi.green": "#9ece6a",
+          "terminal.ansi.yellow": "#e0af68",
+          "terminal.ansi.blue": "#7aa2f7",
+          "terminal.ansi.magenta": "#bb9af7",
+          "terminal.ansi.cyan": "#7dcfff",
+          "terminal.ansi.white": "#a9b1d6",
+          "terminal.ansi.bright_black": "#414868",
+          "terminal.ansi.bright_red": "#f7768e",
+          "terminal.ansi.bright_green": "#9ece6a",
+          "terminal.ansi.bright_yellow": "#e0af68",
+          "terminal.ansi.bright_blue": "#7aa2f7",
+          "terminal.ansi.bright_magenta": "#bb9af7",
+          "terminal.ansi.bright_cyan": "#7dcfff",
+          "terminal.ansi.bright_white": "#c0caf5"
+        }
+      }
+    }
+  ]
+}
