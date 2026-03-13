@@ -34,7 +34,6 @@ return {
       vim.g.nord_contrast = true
       vim.g.nord_borders = false
       vim.g.nord_disable_background = false
-      require("nord").set()
     end,
   },
 
@@ -56,7 +55,6 @@ return {
   {
     "savq/melange-nvim",
     config = function()
-      vim.cmd.colorscheme("melange")
       -- Melange doesn't have a simple 'transparent' opt, so we clear the background highlight
       -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
       -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }):warmer
