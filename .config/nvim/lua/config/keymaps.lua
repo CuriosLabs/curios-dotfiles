@@ -11,10 +11,10 @@ vim.keymap.set("n", "<leader><tab>p", "<cmd>tabprevious<cr>", { desc = "Previous
 vim.keymap.set("n", "<leader><tab>n", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 
 -- Transparency Toggle
-local transparency_enabled = true -- We started with it enabled in colorschemes.lua
+_G.transparency_enabled = true -- We started with it enabled in colorschemes.lua
 function _G.toggle_transparency()
-  transparency_enabled = not transparency_enabled
-  if transparency_enabled then
+  _G.transparency_enabled = not _G.transparency_enabled
+  if _G.transparency_enabled then
     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
