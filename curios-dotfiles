@@ -10,6 +10,8 @@ set -eu
 readonly SCRIPT_VERSION="0.16"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
+SELECTED_THEME=""
+readonly THEMES_LIST=("Catppuccin-Macchiato" "Everforest-Medium" "Gruvbox-Dark" "Hackers-Green" "Kanagawa" "Nord-Dark" "Nord-Light" "One-Dark" "Tokyonight")
 SCRIPT_PATH="$(dirname "$0")"
 
 #------------- Print help function
@@ -23,7 +25,8 @@ Usage: curios-dotfiles [options] <directory>
 
   Options:
      -h, --help         Print this message.
-     --lang LANG        Preset COSMIC keyboard layout, "us" by default.
+     --lang LANG        Preset COSMIC keyboard layout, \"us\" by default.
+     --themes THEME     Preset theme. Available: ${THEMES_LIST[*]}.
      -v, --verbose      Print more information.
      --version          Print version number and exit.
 
@@ -36,8 +39,45 @@ EOF
   exit
 }
 
+#------------- Apply theme function
+apply_theme() {
+  local theme_name="$1"
+  local install_dir="$2"
+
+  printf "\e[32m Applying theme: %s...\e[0m\n" "$theme_name"
+
+  # 1. Alacritty
+  if [ -f "$install_dir/.config/alacritty/$theme_name.toml" ]; then
+    cp "$install_dir/.config/alacritty/$theme_name.toml" "$install_dir/.config/alacritty/alacritty.toml"
+  fi
+
+  # 2. opencode tui.json
+  # Convert to lowercase
+  local tui_theme=$(echo "$theme_name" | tr '[:upper:]' '[:lower:]')
+  if [ -f "$install_dir/.config/opencode/tui.json" ]; then
+    sed -i "s/\"theme\": \".*\"/\"theme\": \"$tui_theme\"/" "$install_dir/.config/opencode/tui.json"
+  fi
+
+  # 3. Neovim
+  local nvim_theme=""
+  case "$theme_name" in
+    Catppuccin-Macchiato) nvim_theme="catppuccin" ;;
+    Everforest-Medium)    nvim_theme="everforest" ;;
+    Gruvbox-Dark)         nvim_theme="gruvbox" ;;
+    Hackers-Green)        nvim_theme="melange" ;;
+    Kanagawa)             nvim_theme="kanagawa" ;;
+    Nord-Dark|Nord-Light) nvim_theme="nord" ;;
+    One-Dark)             nvim_theme="onedark" ;;
+    Tokyonight)           nvim_theme="tokyonight" ;;
+  esac
+
+  if [ -n "$nvim_theme" ] && [ -f "$install_dir/.config/nvim/lua/plugins/colorschemes.lua" ]; then
+    sed -i "s/colorscheme = \".*\"/colorscheme = \"$nvim_theme\"/" "$install_dir/.config/nvim/lua/plugins/colorschemes.lua"
+  fi
+}
+
 #------------- Scripts arguments parse options
-ARGS=$(getopt --longoptions="verbose,version,help,lang:" --name "$0" --options ":hv" -- "$@")
+ARGS=$(getopt --longoptions="verbose,version,help,lang:,themes:" --name "$0" --options ":hv" -- "$@")
 if [ $# -lt 1 ]; then
   usage
 fi
@@ -57,6 +97,23 @@ while true; do
     ;;
   --lang)
     LOCALE_KEYBOARD="$2"
+    shift 2
+    ;;
+  --themes)
+    SELECTED_THEME="$2"
+    # Validate theme
+    valid_theme=0
+    for t in "${THEMES_LIST[@]}"; do
+      if [ "$t" == "$SELECTED_THEME" ]; then
+        valid_theme=1
+        break
+      fi
+    done
+    if [ $valid_theme -eq 0 ]; then
+      printf "\e[31mInvalid theme: %s\e[0m\n" "$SELECTED_THEME"
+      echo "Available themes: ${THEMES_LIST[*]}"
+      exit 2
+    fi
     shift 2
     ;;
   --version)
@@ -122,6 +179,11 @@ mkdir -p "$INSTALL_DIR"/.npm-packages
 
 #------------- Update COSMIC keyboard layout
 sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
+
+#------------- Apply selected theme
+if [ -n "$SELECTED_THEME" ]; then
+  apply_theme "$SELECTED_THEME" "$INSTALL_DIR"
+fi
 
 printf "\e[32mDotfiles installation done.\e[0m\n"
 
