@@ -101,8 +101,10 @@ apply_theme() {
   # 4. Zed
   if [ -f "$install_dir/.config/zed/settings.json" ]; then
     if [ "$theme_name" == "Nord-Light" ]; then
+      sed -i "s/\"mode\": \".*\"/\"mode\": \"light\"/" "$install_dir/.config/zed/settings.json"
       sed -i "s/\"light\": \".*\"/\"light\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
     else
+      sed -i "s/\"mode\": \".*\"/\"mode\": \"dark\"/" "$install_dir/.config/zed/settings.json"
       sed -i "s/\"dark\": \".*\"/\"dark\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
     fi
   fi
