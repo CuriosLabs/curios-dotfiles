@@ -104,7 +104,19 @@ fi
 #------------- Copying dotfiles into INSTALL_DIR
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.npmrc
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc
-cp -r "$curios_dotfiles_path"/.config/ "$INSTALL_DIR"
+
+mkdir -p "$INSTALL_DIR"/.config/alacritty/
+mkdir -p "$INSTALL_DIR"/.config/btop/
+mkdir -p "$INSTALL_DIR"/.config/cosmic/
+mkdir -p "$INSTALL_DIR"/.config/nvim/
+mkdir -p "$INSTALL_DIR"/.config/opencode/
+
+cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
+cp -rn "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
+
 chmod -R u+w "$INSTALL_DIR"/.config/
 mkdir -p "$INSTALL_DIR"/.npm-packages
 
