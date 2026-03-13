@@ -3,10 +3,10 @@
 shell = "/run/current-system/sw/bin/zsh"
 
 [window]
-opacity = 0.9
+opacity = 0.95
 
 [font]
-size = 11.0
+size = 12.0
 
 [font.bold]
 family = "JetBrains Mono"
