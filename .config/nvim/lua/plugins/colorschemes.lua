@@ -61,7 +61,18 @@ return {
     end,
   },
 
-  -- One Dark (for CuriOS theme)
+  -- Everforest
+  {
+    "sainnhe/everforest",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.everforest_background = "medium"
+      vim.g.everforest_better_performance = 1
+    end,
+  },
+
+  -- One Dark (for CuriOS default theme)
   {
     "navarasu/onedark.nvim",
     opts = {

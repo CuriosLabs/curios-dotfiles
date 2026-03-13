@@ -1,0 +1,49 @@
+# Custom alacritty theme - Everforest Medium
+[terminal]
+shell = "/run/current-system/sw/bin/zsh"
+
+[window]
+opacity = 0.95
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrains Mono"
+style = "SemiBold Italic"
+
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+
+[colors.primary]
+background = '#2d353b'
+foreground = '#d3c6aa'
+
+[colors.normal]
+black = '#303030'
+red = '#fda1a0'
+green = '#92cf9c'
+yellow = '#f7e062'
+blue = '#63d0df'
+magenta = '#e79cfe'
+cyan = '#a1c0eb'
+white = '#c6c6c6'
+
+[colors.bright]
+black = '#5e5e5e'
+red = '#ffa090'
+green = '#5edb8c'
+yellow = '#f7e062'
+blue = '#63d0df'
+magenta = '#e79cfe'
+cyan = '#a1c0eb'
+white = '#ffffff'
