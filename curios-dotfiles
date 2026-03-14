@@ -10,7 +10,7 @@ set -eu
 readonly SCRIPT_VERSION="0.16"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
-SELECTED_THEME=""
+SELECTED_THEME="One-Dark"
 readonly THEMES_LIST=("Catppuccin-Macchiato" "Everforest-Medium" "Gruvbox-Dark" "Hackers-Green" "Kanagawa" "Nord-Dark" "Nord-Light" "One-Dark" "Tokyonight")
 SCRIPT_PATH="$(dirname "$0")"
 
@@ -26,13 +26,13 @@ Usage: curios-dotfiles [options] <directory>
   Options:
      -h, --help         Print this message.
      --lang LANG        Preset COSMIC keyboard layout, \"us\" by default.
-     --themes THEME     Preset theme. Available: ${THEMES_LIST[*]}.
+     --themes THEME     Preset theme, \"One-Dark\" by default. Available: ${THEMES_LIST[*]}.
      -v, --verbose      Print more information.
      --version          Print version number and exit.
 
   Examples:
     Install dotfiles into home directory of user 'nixos' with French keyboard:
-      curios-dotfiles --lang fr /home/nixos/
+      curios-dotfiles --lang fr --themes One-Dark /home/nixos/
     Install as a skeleton for future user home directory:
       curios-dotfiles /etc/skel/
 EOF
@@ -108,6 +108,12 @@ apply_theme() {
       sed -i "s/\"dark\": \".*\"/\"dark\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
     fi
   fi
+
+  # 5. Brave browser
+
+  # 6. COSMIC desktop
+  # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
+  # cosmic-settings --apply-theme /path/to/your/theme.ron
 }
 
 #------------- Scripts arguments parse options
@@ -205,12 +211,12 @@ mkdir -p "$INSTALL_DIR"/.config/nvim/
 mkdir -p "$INSTALL_DIR"/.config/opencode/
 mkdir -p "$INSTALL_DIR"/.config/zed/themes/
 
-#cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
-#cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
-#cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
-#cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
-#cp -rn "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
-#cp -r "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
+cp -rn "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
+cp -rn "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
 
 chmod -R u+w "$INSTALL_DIR"/.config/
 mkdir -p "$INSTALL_DIR"/.npm-packages
@@ -224,5 +230,3 @@ if [ -n "$SELECTED_THEME" ]; then
 fi
 
 printf "\e[32mDotfiles installation done.\e[0m\n"
-
-# cosmic-settings --apply-theme /path/to/your/theme.ron
