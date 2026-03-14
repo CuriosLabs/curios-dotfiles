@@ -1,12 +1,12 @@
-# Custom alacritty terminal configuration
+# Custom alacritty theme - CuriOS default theme
 [terminal]
 shell = "/run/current-system/sw/bin/zsh"
 
 [window]
-opacity = 0.9
+opacity = 0.95
 
 [font]
-size = 11.0
+size = 12.0
 
 [font.bold]
 family = "JetBrains Mono"
@@ -24,10 +24,10 @@ style = "Italic"
 family = "JetBrains Mono"
 style = "Regular"
 
-# GNOME terminal Dark
+# Inspired by GNOME terminal Dark
 [colors.primary]
-background = '#212121'
-foreground = '#d0cfcc'
+background = '#20252c'
+foreground = '#a1a9b7'
 
 [colors.normal]
 black = '#171421'

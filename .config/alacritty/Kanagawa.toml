@@ -1,4 +1,4 @@
-# Custom alacritty terminal configuration
+# Custom alacritty theme - Kanagawa
 [terminal]
 shell = "/run/current-system/sw/bin/zsh"
 
@@ -6,7 +6,7 @@ shell = "/run/current-system/sw/bin/zsh"
 opacity = 0.95
 
 [font]
-size = 11.0
+size = 12.0
 
 [font.bold]
 family = "JetBrainsMono Nerd Font Mono"

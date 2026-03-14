@@ -1,0 +1,81 @@
+# Custom alacritty theme - Hackers Green
+[terminal]
+shell = "/run/current-system/sw/bin/zsh"
+
+[window]
+opacity = 0.95
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrains Mono"
+style = "SemiBold Italic"
+
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+
+[colors.primary]
+background = '#000000'
+foreground = '#11FF00'
+
+[colors.cursor]
+text = '#000000'
+cursor = '#11ff00'
+
+[colors.vi_mode_cursor]
+text = '#000000'
+cursor = '#acf7d2'
+
+[colors.selection]
+text = '#000000'
+background = '#11ff00'
+
+[colors.search.matches]
+foreground = '#000000'
+background = '#acf7d2'
+
+[colors.search.focused_match]
+foreground = '#000000'
+background = '#11ff00'
+
+[colors.footer_bar]
+foreground = '#000000'
+background = '#acf7d2'
+
+[colors.hints.start]
+foreground = '#000000'
+background = '#fff19e'
+
+[colors.hints.end]
+foreground = '#000000'
+background = '#acd7d2'
+
+[colors.normal]
+black = '#1b1b1b'
+red = '#ffb5b5'
+green = '#acf7d2'
+yellow = '#fff19e'
+blue = '#94ff00'
+magenta = '#cf7dff'
+cyan = '#48b9c7'
+white = '#e2e2e2'
+
+[colors.bright]
+black = '#5e5e5e'
+red = '#ffa090'
+green = '#5edb8c'
+yellow = '#f7e062'
+blue = '#94ff00'
+magenta = '#cf7dff'
+cyan = '#48b9c7'
+white = '#ffffff'
