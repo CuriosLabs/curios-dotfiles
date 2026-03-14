@@ -25,8 +25,8 @@ Usage: curios-dotfiles [options] <directory>
 
   Options:
      -h, --help         Print this message.
-     --lang LANG        Preset COSMIC keyboard layout, \"us\" by default.
-     --themes THEME     Preset theme, \"One-Dark\" by default. Available: ${THEMES_LIST[*]}.
+     --lang LANG        Preset COSMIC keyboard layout, 'us' by default.
+     --themes THEME     Preset theme, 'One-Dark' by default. Available: ${THEMES_LIST[*]}.
      -v, --verbose      Print more information.
      --version          Print version number and exit.
 
