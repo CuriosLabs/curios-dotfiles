@@ -109,7 +109,12 @@ apply_theme() {
     fi
   fi
 
-  # 5. Brave browser
+  # 5. Brave Browser (Manual Reference)
+  # Note: Brave must be closed before modifying these files.
+  # - Toggle Light/Dark (0:System, 1:Light, 2:Dark):
+  #   jq '.brave.theme_mode = 2' "$install_dir/.config/BraveSoftware/Brave-Browser/Local State"
+  # - Set Custom Theme ID:
+  #   jq '.extensions.theme.id = "THEME_ID"' "$install_dir/.config/BraveSoftware/Brave-Browser/Default/Preferences"
 
   # 6. COSMIC desktop
   # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
