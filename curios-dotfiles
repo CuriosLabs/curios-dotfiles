@@ -201,10 +201,6 @@ if [ ! -d "$curios_dotfiles_path" ]; then
   exit 1
 fi
 
-if [ $VERBOSE -eq 1 ]; then
-  printf "curios-dotfiles package share path: %s\n" "$curios_dotfiles_path"
-fi
-
 #------------- Copying dotfiles into INSTALL_DIR
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.npmrc
 install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc
