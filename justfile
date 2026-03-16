@@ -34,6 +34,7 @@ lint:
 
 # Complete publish process: lint, tag then build and update hash signature, finally push on github.
 publish VERSION:
+  @if git rev-parse "{{VERSION}}" >/dev/null 2>&1; then echo "Warning: Tag {{VERSION}} already exists."; exit 1; fi
   git checkout testing
   @just clean
   @just lint
@@ -64,5 +65,5 @@ removetag VERSION:
   git push --delete origin {{VERSION}}
 
 # Launch curios-dotfiles bash script directly (not the Nix pkgs).
-test:
-  ./curios-dotfiles
+test *FLAGS:
+  ./curios-dotfiles {{FLAGS}}

@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.17"
+readonly SCRIPT_VERSION="0.18"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -25,8 +25,8 @@ Usage: curios-dotfiles [options] <directory>
 
   Options:
      -h, --help         Print this message.
-     --lang LANG        Preset COSMIC keyboard layout, \"us\" by default.
-     --themes THEME     Preset theme, \"One-Dark\" by default. Available: ${THEMES_LIST[*]}.
+     --lang LANG        Preset COSMIC keyboard layout, 'us' by default.
+     --themes THEME     Preset theme, 'One-Dark' by default. Available: ${THEMES_LIST[*]}.
      -v, --verbose      Print more information.
      --version          Print version number and exit.
 
@@ -118,7 +118,7 @@ apply_theme() {
 
   # 6. COSMIC desktop
   # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
-  # cosmic-settings --apply-theme /path/to/your/theme.ron
+  # cosmic-settings --apply-theme "/run/current-system/sw/share/themes/curios/$theme_name.ron"
 }
 
 #------------- Scripts arguments parse options
@@ -199,10 +199,6 @@ fi
 if [ ! -d "$curios_dotfiles_path" ]; then
   printf "\e[31m curios-dotfiles package not found!\e[0m\n"
   exit 1
-fi
-
-if [ $VERBOSE -eq 1 ]; then
-  printf "curios-dotfiles package share path: %s\n" "$curios_dotfiles_path"
 fi
 
 #------------- Copying dotfiles into INSTALL_DIR
