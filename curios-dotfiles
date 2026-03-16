@@ -118,7 +118,7 @@ apply_theme() {
 
   # 6. COSMIC desktop
   # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
-  # cosmic-settings --apply-theme /path/to/your/theme.ron
+  # cosmic-settings --apply-theme "/run/current-system/sw/share/themes/curios/$theme_name.ron"
 }
 
 #------------- Scripts arguments parse options
