@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.18"
+readonly SCRIPT_VERSION="0.19"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -131,7 +131,7 @@ apply_theme() {
   # - Set Custom Theme ID:
   #   jq '.extensions.theme.id = "THEME_ID"' "$install_dir/.config/BraveSoftware/Brave-Browser/Default/Preferences"
   if [ ! -f "$bravethemespolicyfile" ]; then
-    sudo mkdir -p $(dirname "$bravethemespolicyfile")
+    sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
     sudo touch "$bravethemespolicyfile"
     sudo chown -R 1000:100 "$bravethemespolicyfile"
   fi
