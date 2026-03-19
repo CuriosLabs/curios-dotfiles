@@ -131,7 +131,7 @@ apply_theme() {
   # - Set Custom Theme ID:
   #   jq '.extensions.theme.id = "THEME_ID"' "$install_dir/.config/BraveSoftware/Brave-Browser/Default/Preferences"
   if [ ! -f "$bravethemespolicyfile" ]; then
-    sudo mkdir -p "$bravethemespolicyfile"
+    sudo mkdir -p $(dirname "$bravethemespolicyfile")
     sudo touch "$bravethemespolicyfile"
     sudo chown -R 1000:100 "$bravethemespolicyfile"
   fi
@@ -139,7 +139,7 @@ apply_theme() {
 
   # 6. COSMIC desktop
   # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
-  # cosmic-settings --apply-theme "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  # cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
 }
 
 #------------- Scripts arguments parse options
