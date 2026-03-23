@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.19"
+readonly SCRIPT_VERSION="0.20"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -128,7 +128,7 @@ apply_theme() {
   if [ ! -f "$bravethemespolicyfile" ]; then
     sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
     sudo touch "$bravethemespolicyfile"
-    sudo chown -R 1000:100 "$bravethemespolicyfile"
+    sudo chown 1000:100 "$bravethemespolicyfile"
   fi
   jq -n '{ "BrowserThemeColor": "'$color_theme'" }' >"$bravethemespolicyfile"
 
