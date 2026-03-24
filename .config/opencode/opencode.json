@@ -3,10 +3,25 @@
   // Settings
   "permission": {
     "edit": "ask",
-    "bash": "ask",
+    "bash": {
+      "*": "ask",
+      "cat *": "allow",
+      "fd *": "allow",
+      "git *": "allow",
+      "git commit *": "deny",
+      "git push *": "deny",
+      "grep *": "allow",
+      "ls *": "allow",
+      "rm *": "deny"
+    },
     "glob": "allow",
     "grep": "allow",
     "list": "allow",
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny"
+    },
     "webfetch": "allow"
   },
   "autoupdate": false,
@@ -20,6 +35,9 @@
       },
       "models": {
         // Adjust to your LM Studio configuration
+        "nvidia/nemotron-3-nano-4b": {
+          "name": "Nemotron-3 Nano 4b (local)"
+        },
         "qwen/qwen3.5-9b": {
           "name": "Qwen3.5 9b (local)"
         }

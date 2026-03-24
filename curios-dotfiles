@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.18"
+readonly SCRIPT_VERSION="0.20"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -43,41 +43,56 @@ EOF
 apply_theme() {
   local theme_name="$1"
   local install_dir="$2"
+  local color_theme=""
   local nvim_theme=""
   local tui_theme=""
+  local bravethemespolicyfile="/etc/brave/policies/managed/themes.json"
 
   printf "\e[32m Applying theme: %s...\e[0m\n" "$theme_name"
 
   case "$theme_name" in
   Catppuccin-Macchiato)
+    color_theme="#24273a"
     nvim_theme="catppuccin-macchiato"
     tui_theme="catppuccin-macchiato"
     ;;
   Everforest-Medium)
+    color_theme="#2d353b"
     nvim_theme="everforest"
     tui_theme="everforest"
     ;;
   Gruvbox-Dark)
+    color_theme="#282828"
     nvim_theme="gruvbox"
     tui_theme="gruvbox"
     ;;
   Hackers-Green)
+    color_theme="#000000"
     nvim_theme="melange"
     tui_theme="matrix"
     ;;
   Kanagawa)
+    color_theme="#1f1f28"
     nvim_theme="kanagawa"
     tui_theme="kanagawa"
     ;;
-  Nord-Dark | Nord-Light)
+  Nord-Dark)
+    color_theme="#2e3440"
+    nvim_theme="nord"
+    tui_theme="nord"
+    ;;
+  Nord-Light)
+    color_theme="#eceff4"
     nvim_theme="nord"
     tui_theme="nord"
     ;;
   One-Dark)
+    color_theme="#20252c"
     nvim_theme="onedark"
     tui_theme="one-dark"
     ;;
   Tokyonight)
+    color_theme="#1a1b26"
     nvim_theme="tokyonight"
     tui_theme="tokyonight"
     ;;
@@ -110,15 +125,16 @@ apply_theme() {
   fi
 
   # 5. Brave Browser (Manual Reference)
-  # Note: Brave must be closed before modifying these files.
-  # - Toggle Light/Dark (0:System, 1:Light, 2:Dark):
-  #   jq '.brave.theme_mode = 2' "$install_dir/.config/BraveSoftware/Brave-Browser/Local State"
-  # - Set Custom Theme ID:
-  #   jq '.extensions.theme.id = "THEME_ID"' "$install_dir/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+  if [ ! -f "$bravethemespolicyfile" ]; then
+    sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
+    sudo touch "$bravethemespolicyfile"
+    sudo chown 1000:100 "$bravethemespolicyfile"
+  fi
+  jq -n '{ "BrowserThemeColor": "'$color_theme'" }' >"$bravethemespolicyfile"
 
   # 6. COSMIC desktop
   # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
-  # cosmic-settings --apply-theme "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  # cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
 }
 
 #------------- Scripts arguments parse options

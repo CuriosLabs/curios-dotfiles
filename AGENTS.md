@@ -22,6 +22,7 @@ This repository contains the opinionated configuration files (dotfiles) for the
   - `cosmic/`: Detailed COSMIC desktop settings (mostly RON files).
   - `nvim/`: Neovim configuration (LazyVim based).
   - `zed/`: Zed editor settings and themes.
+  - `opencode/`: Opencode AI agent configuration.
 - `themes/`: Predefined COSMIC desktop themes in `.ron` format.
 - `wallpapers/`: Default CuriOS wallpapers.
 - `curios-dotfiles`: The primary installation and management script.
