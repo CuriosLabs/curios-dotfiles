@@ -7,6 +7,7 @@
       "*": "ask",
       "cat *": "allow",
       "fd *": "allow",
+      "find *": "allow",
       "git *": "allow",
       "git commit *": "deny",
       "git push *": "deny",
@@ -20,9 +21,11 @@
     "read": {
       "*": "allow",
       "*.env": "deny",
-      "*.env.*": "deny"
+      "*.env.*": "deny",
+      "$HOME/.ssh/*": "deny"
     },
-    "webfetch": "allow"
+    "webfetch": "allow",
+    "websearch": "allow"
   },
   "autoupdate": false,
   // LLMs Providers - Adjust to your real configuration
