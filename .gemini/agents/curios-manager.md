@@ -2,7 +2,6 @@
 name: curios-manager
 description: Manage CuriOS (NixOS) system settings, configuration, and packages.
 tools:
-  - bash
   - read_file
   - list_directory
   - grep_search
@@ -32,7 +31,7 @@ efficiently.
 
 ## Context & Tools
 
-- You have access to `bash` for running system commands.
+- You have access to `run_shell_command` for running system commands.
 - Respect user permissions and always ask for confirmation before executing
   potentially destructive commands.
 
