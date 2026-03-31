@@ -227,6 +227,8 @@ mkdir -p "$INSTALL_DIR"/.config/cosmic/
 mkdir -p "$INSTALL_DIR"/.config/nvim/
 mkdir -p "$INSTALL_DIR"/.config/opencode/
 mkdir -p "$INSTALL_DIR"/.config/zed/themes/
+mkdir -p "$INSTALL_DIR"/.agents/skills/
+mkdir -p "$INSTALL_DIR"/.gemini/agents/
 
 cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
@@ -234,8 +236,12 @@ cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
 cp -rn "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
 cp -rn "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.agents/skills/ "$INSTALL_DIR"/.agents/
+cp -r "$curios_dotfiles_path"/.gemini/agents/ "$INSTALL_DIR"/.gemini/
 
 chmod -R u+w "$INSTALL_DIR"/.config/
+chmod -R u+w "$INSTALL_DIR"/.agents/
+chmod -R u+w "$INSTALL_DIR"/.gemini/
 mkdir -p "$INSTALL_DIR"/.npm-packages
 
 #------------- Update COSMIC keyboard layout
