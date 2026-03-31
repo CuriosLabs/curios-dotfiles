@@ -13,7 +13,8 @@
       "git push *": "deny",
       "grep *": "allow",
       "ls *": "allow",
-      "rm *": "deny"
+      "rm *": "deny",
+      "sudo *": "ask"
     },
     "glob": "allow",
     "grep": "allow",
