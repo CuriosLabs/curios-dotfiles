@@ -19,10 +19,11 @@ It leverages the `curios-update` utility to perform system-level operations.
   2. If so, upgrade with: `sudo curios-update --upgrade`.
 - **System modules/configuration**: CuriOS use a NixOS modular configuration. Many
   packages or configurations are defined as modules but not enabled by default.
-  1. Verify if the package or the configuration is defined by a CuriOS modules
-     with: `curios-update --show-modules`. This will return a JSON output.
-     For example, the key "curios.virtualisation.docker.enable" tell us if "docker"
-     and its dependencies are installed.
+  1. Verify if the package or the configuration is defined by a CuriOS module.
+     As the output is JSON, use `grep` or `jq` to find the path of an option:
+     - Search with grep: `curios-update --show-modules | grep -i "docker"`
+     - Search (firefox in this example) the JSON path with jq:
+       `curios-update --show-modules | jq -r 'paths | select(.[-1] == "firefox") | join(".")'`
   2. More information could be shown on a NixOS or a CuriOS option using:
      `curios-update --nixos-option <option_key>`
      (i.e `curios-update --nixos-option curios.virtualisation.docker.enable`).

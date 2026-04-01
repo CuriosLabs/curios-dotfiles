@@ -10,6 +10,8 @@ permission:
     "ls *": allow
     "cat *": allow
     "cp *": ask
+    "grep *": allow
+    "jq *": allow
     "rm *": ask
     "curios-update *": allow
     "curios-dotfiles *": allow
