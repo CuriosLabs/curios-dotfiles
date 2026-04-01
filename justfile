@@ -30,7 +30,7 @@ lint:
   @echo 'Linting Nix files...'
   for file in `fd --type f ".nix" .`; do statix check $file; done
   @echo 'Linting Bash files...'
-  shellcheck --color=always -f tty -x ./curios-dotfiles
+  shellcheck --color=always -f tty -x ./curios-dotfiles && echo 'Shellcheck: SUCCESS'
 
 # Complete publish process: lint, tag then build and update hash signature, finally push on github.
 publish VERSION:
