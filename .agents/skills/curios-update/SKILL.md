@@ -1,6 +1,8 @@
 ---
 name: curios-update
-description: Manage CuriOS/NixOS system updates, package installations, and module configurations using the `curios-update` tool.
+description:
+  Manage CuriOS a Linux distribution based on NixOS. Use when the user asks to do
+  a system update or upgrade, add a package, change a module configuration.
 ---
 
 # Curios System Manager Skill
@@ -10,29 +12,29 @@ It leverages the `curios-update` utility to perform system-level operations.
 
 ## What I do
 
-- **System Updates**: Update the entire system, including installed packages and
+- **System Update**: Update the entire system, including installed packages and
   Nix flakes, do a Nix garbage collector, using `sudo curios-update --update`.
-- **System Upgrades**: Download and install the latest CuriOS system version using
-  `sudo curios-update --upgrade`.
-- **System modules/configuration**:
-  - When installing a package or changing a system configuration, the FIRST thing
-  to do is to verify if the package or the configuration is defined
-  by a CuriOS modules with: `curios-update --show-modules`. This will return a
-  JSON output. For example, the key "curios.virtualisation.docker.enable" tell
-  us if "docker" and its dependencies are installed.
-  - More information could be shown on a NixOS or a CuriOS option using
-  `curios-update --nixos-option <option_key>`
-  (i.e `curios-update --nixos-option curios.virtualisation.docker.enable`).
-  - The CuriOS module could be set with:
-  `sudo curios-update --update-modules <option_key> <value>`
-  - After a module update, the system MUST be updated with:
-  `sudo curios-update --update`
+- **System Upgrade**:
+  1. Check if a newer version of Curios is available with: `curios-update --check`.
+  2. If so, upgrade with: `sudo curios-update --upgrade`.
+- **System modules/configuration**: CuriOS use a NixOS modular configuration. Many
+  packages or configurations are defined as modules but not enabled by default.
+  1. Verify if the package or the configuration is defined by a CuriOS modules
+     with: `curios-update --show-modules`. This will return a JSON output.
+     For example, the key "curios.virtualisation.docker.enable" tell us if "docker"
+     and its dependencies are installed.
+  2. More information could be shown on a NixOS or a CuriOS option using:
+     `curios-update --nixos-option <option_key>`
+     (i.e `curios-update --nixos-option curios.virtualisation.docker.enable`).
+  3. The CuriOS module or configuration could be set with:
+     `sudo curios-update --update-modules <option_key> <value>`
+  4. Then the system MUST be updated with: `sudo curios-update --update`.
 - **Package Management**: In last resort, packages could be installed as standard
-  NixOS package if a CuriOS modules does NOT exist for it.
-  - Search for NixOS packages name and information with:
-  `curios-update --search-pkgs <name>`. Notice the 'package_attr_name' value
-  of the JSON output.
-  - Then install a NixOS package: `sudo curios-update --add-pkg <attr_name>`.
+  NixOS package ONLY if a CuriOS modules does NOT exist for it.
+  1. Search for NixOS packages attribute name and information with:
+     `curios-update --search-pkgs <name>`. Notice the 'package_attr_name' value
+     of the JSON output.
+  2. Then install the NixOS package: `sudo curios-update --add-pkg <attr_name>`.
 
 ## When to use me
 

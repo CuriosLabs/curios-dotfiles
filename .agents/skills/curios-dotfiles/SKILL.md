@@ -1,6 +1,8 @@
 ---
 name: curios-dotfiles
-description: Install and manage CuriOS dotfiles, themes, and COSMIC desktop settings using the `curios-dotfiles` tool.
+description:
+ Install and manage CuriOS dotfiles, themes, and COSMIC desktop settings using
+ the `curios-dotfiles` tool.
 ---
 
 # Curios Dotfiles Skill
@@ -11,11 +13,11 @@ utility.
 
 ## How to use it
 
-- **Determine language**: Ask user language or find the system language with the
-  command: `curios-update --nixos-option curios.system.keyboard`.
-- **Deployment**: Deploy configurations to user $HOME directory or as a skeleton
-for future users using "/etc/skel/" directory.
-- **Dotfiles/Theme Application**: Apply a specific theme (e.g., One-Dark,
+1. **Determine language**: Ask user language or find the system language with the
+   command: `curios-update --nixos-option curios.system.keyboard`.
+2. **Deployment**: Deploy configurations to user $HOME directory or as a skeleton
+   for future users using "/etc/skel/" directory.
+3. **Dotfiles/Theme Application**: Apply a specific theme (e.g., One-Dark,
   Catppuccin-Macchiato, Tokyonight) and dotfiles using the command:
   `curios-dotfiles --lang <language> --themes <theme> <directory>`.
 
