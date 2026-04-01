@@ -1,5 +1,5 @@
 ---
-name: curios-system-manager
+name: curios-update
 description: Manage CuriOS/NixOS system updates, package installations, and module configurations using the `curios-update` tool.
 ---
 
@@ -45,7 +45,7 @@ It leverages the `curios-update` utility to perform system-level operations.
 
 ## Important Notes
 
-- **Discovery**: Always use `curios-update --help` to explore the latest options
+- **Discovery**: Use `curios-update --help` to explore the latest options
   and command syntax.
 - Most modifying commands (update, upgrade, add-pkg, update-modules) require `sudo`.
 - Always verify the package attribute name "package_attr_name" using `--search-pkgs`
