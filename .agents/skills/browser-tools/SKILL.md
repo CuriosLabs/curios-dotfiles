@@ -1,15 +1,19 @@
 ---
 name: browser-tools
 description:
- Interact with a Chrome-based browser using remote debugging tools at
- localhost:9222. Automate browser tasks like navigation, form filling,
- clicking, and data extraction.
+ Browser automation CLI for AI agents. Use when the user needs to interact with
+ websites, including navigating pages, filling forms, clicking buttons, taking
+ screenshots, extracting data, testing web apps, or automating any browser task.
+ Triggers include requests to "open a website", "fill out a form", "click a button",
+ "take a screenshot", "scrape data from a page", "test this web app",
+ "login to a site", "automate browser actions", or any task requiring programmatic
+ web interaction.
 ---
 
 # Browser Tools Skill
 
 This skill provides a set of tools to interact with an existing browser instance
-running with remote debugging enabled (`--remote-debugging-port=9222`).
+running with remote debugging enabled.
 
 ## Commands and Usage
 
@@ -18,13 +22,13 @@ The `browser-tool` command is a wrapper for several browser automation tasks:
 1. **Navigate**: Open a URL in the browser.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool open-url <url>
+   ./scripts/browser-tool open-url <url>
    ```
 
 2. **Click**: Click an element by its CSS selector.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool click <selector>
+   ./scripts/browser-tool click <selector>
    ```
 
 3. **Fill**: Type text into an input field.
@@ -36,39 +40,40 @@ The `browser-tool` command is a wrapper for several browser automation tasks:
 4. **Extract**: Get the inner text of an element.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool extract <selector>
+   ./scripts/browser-tool extract <selector>
    ```
 
 5. **Screenshot**: Take a screenshot of the current page.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool screenshot <filename.png>
+   ./scripts/browser-tool screenshot <filename.png>
    ```
 
 6. **Eval**: Execute custom JavaScript in the browser context.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool eval "window.location.href"
+   ./scripts/browser-tool eval "window.location.href"
    ```
 
 7. **List Tabs**: Show all open tabs with their indices, titles, and URLs.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool list-tabs
+   ./scripts/browser-tool list-tabs
    ```
 
 8. **Switch Tab**: Bring a specific tab to the front by its index.
 
    ```bash
-   ./.agents/skills/browser-tools/scripts/browser-tool switch-tab <index>
+   ./scripts/browser-tool switch-tab <index>
    ```
 
 ## Targeting Specific Tabs
 
-By default, commands (click, fill, extract, etc.) target the **first tab (index 0)**. To target a different tab, use the `BROWSER_TAB_INDEX` environment variable:
+By default, commands (click, fill, extract, etc.) target the **first tab (index 0)**.
+To target a different tab, use the `BROWSER_TAB_INDEX` environment variable:
 
 ```bash
-BROWSER_TAB_INDEX=2 ./.agents/skills/browser-tools/scripts/browser-tool click "#my-button"
+BROWSER_TAB_INDEX=2 ./scripts/browser-tool click "#my-button"
 ```
 
 Use `list-tabs` to find the correct index.
@@ -82,9 +87,11 @@ Use `list-tabs` to find the correct index.
 
 ## Important Notes
 
-- **Automatic Launch**: The `browser-tool` script will automatically try to start Brave with remote debugging on port 9222 if it's not already running.
-- **Brave Specific Setup**: In some Brave versions, you may need to open `brave://inspect/#remote-debugging` in the browser and check the **"Allow remote debugging for this browser instance"** box for the remote port to become active.
-- **Dependency Management**: The script will also check for `puppeteer-core` and install it globally if it's missing.
+- **Automatic Launch**: The `browser-tool` script will automatically try to start
+  Brave with remote debugging on port 9222 if it's not already running.
+- **Dependency Management**: The script will also check for `puppeteer-core` and
+  install it globally if it's missing.
 - The tools use `puppeteer-core` to connect to the browser.
 - By default, the tools connect to the first available tab or create a new one.
-- Commands are executed from the project root using the `./.agents/skills/browser-tools/scripts/browser-tool` wrapper.
+- Commands are executed from the project root using the `./scripts/browser-tool`
+  wrapper.

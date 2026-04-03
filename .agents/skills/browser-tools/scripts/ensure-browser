@@ -6,30 +6,40 @@ PORT=9222
 
 # Check if something is already listening on the port
 if ! ss -tln | grep -q ":$PORT "; then
-    BRAVE_EXE=$(which brave 2>/dev/null)
-    
-    if [ -z "$BRAVE_EXE" ]; then
-        echo "Error: Brave browser not found. Please install it or ensure it is in your PATH."
-        exit 1
-    fi
+  BRAVE_EXE=$(which brave 2>/dev/null)
 
-    echo "Starting Brave browser with --remote-debugging-port=$PORT..."
-    # Launch in a new session and detached mode
-    setsid "$BRAVE_EXE" --remote-debugging-port=$PORT > /dev/null 2>&1 &
-
-    # Wait for the port to open (up to 10 seconds)
-    for i in {1..10}; do
-        if ss -tln | grep -q ":$PORT "; then
-            echo "Browser started successfully."
-            exit 0
-        fi
-        sleep 1
-    done
-
-    echo "Error: Timed out waiting for browser to start on port $PORT."
-    echo "Tip: Open 'brave://inspect/#remote-debugging' in Brave and ensure 'Allow remote debugging for this browser instance' is checked."
+  if [ -z "$BRAVE_EXE" ]; then
+    echo "Error: Brave browser not found. Please install it or ensure it is in your PATH."
     exit 1
+  fi
+
+  PROFILE_DIR=$(mktemp -d -t brave-profile-XXXXXX)
+  DEFAULT_PROFILE="$HOME/.config/BraveSoftware/Brave-Browser"
+  if [ -d "$DEFAULT_PROFILE" ]; then
+    echo "Copying default Brave profile to $PROFILE_DIR..."
+    cp -rp "$DEFAULT_PROFILE/." "$PROFILE_DIR/"
+    rm "$PROFILE_DIR"/Singleton*
+  fi
+
+  echo "Starting Brave browser with --remote-debugging-port=$PORT and --user-data-dir=$PROFILE_DIR..."
+  # Launch in a new session and detached mode
+  setsid "$BRAVE_EXE" --remote-debugging-port=$PORT --user-data-dir="$PROFILE_DIR" >/dev/null 2>&1 &
+
+  # Wait for the port to open (up to 10 seconds)
+  for i in {1..10}; do
+    if ss -tln | grep -q ":$PORT "; then
+      echo "Browser started successfully."
+      exit 0
+    fi
+    sleep 1
+  done
+
+  echo "Error: Timed out waiting for browser to start on port $PORT."
+  echo "Allow remote debugging tool for Brave with the command:"
+  echo "sudo curios-update --update-modules curios.desktop.browser.brave.remoteDebuggingAllowed true"
+  echo "OR make sure to check the 'Allow remote debugging for this browser instance' box in 'brave://inspect/#remote-debugging'"
+  exit 1
 else
-    # Optional: could check if it's actually a browser, but usually port 9222 is reserved for this.
-    exit 0
+  # Optional: could check if it's actually a browser, but usually port 9222 is reserved for this.
+  exit 0
 fi

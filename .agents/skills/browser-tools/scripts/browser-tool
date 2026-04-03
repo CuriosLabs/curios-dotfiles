@@ -3,7 +3,7 @@
 # A bash wrapper to execute browser tasks using ts-node.
 
 # Determine the directory of the script
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Ensure the browser is running with remote debugging enabled
 "$DIR/ensure-browser"
