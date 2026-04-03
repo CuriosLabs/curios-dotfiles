@@ -25,12 +25,14 @@ hash-update VERSION:
   git commit -a -m "Updated hash signature"
   git push
 
-# Linting Nix files.
+# Linting Nix, Bash and TypeScript files.
 lint:
   @echo 'Linting Nix files...'
   for file in `fd --type f ".nix" .`; do statix check $file; done
   @echo 'Linting Bash files...'
   shellcheck --color=always -f tty -x ./curios-dotfiles && echo 'Shellcheck: SUCCESS'
+  @echo 'Linting TypeScript files...'
+  NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/browser-tools/scripts/eslint.config.mjs ./.agents/skills/browser-tools/scripts/*.ts && echo 'ESLint: SUCCESS'
 
 # Complete publish process: lint, tag then build and update hash signature, finally push on github.
 publish VERSION:
