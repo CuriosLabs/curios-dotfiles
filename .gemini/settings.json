@@ -39,9 +39,19 @@
     "showMemoryUsage": true,
     "showModelInfoInChat": true
   },
-  "telemetry": {
-    "enabled": true,
-    "target": "local",
-    "outfile": "$HOME/.gemini/telemetry.log"
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "name": "shell-history-logger",
+            "type": "command",
+            "command": "$HOME/.gemini/hooks/log-shell.sh",
+            "description": "Logs all agent shell commands to a history file"
+          }
+        ]
+      }
+    ]
   }
 }
