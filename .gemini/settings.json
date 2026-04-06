@@ -1,0 +1,47 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "general": {
+    "vimMode": false,
+    "sessionRetention": {
+      "enabled": true,
+      "maxAge": "30d",
+      "maxCount": 50
+    }
+  },
+  "context": {
+    "fileName": [
+      "GEMINI.md",
+      "AGENTS.md",
+      "CONTEXT.md"
+    ]
+  },
+  "experimental": {
+    "enableAgents": true
+  },
+  "skills": {
+    "enabled": true
+  },
+  "tools": {
+    "useRipgrep": true,
+    "shell": {
+      "showColor": true
+    }
+  },
+  "ui": {
+    "footer": {
+      "hideContextPercentage": false
+    },
+    "hideContextSummary": false,
+    "showMemoryUsage": true,
+    "showModelInfoInChat": true
+  },
+  "telemetry": {
+    "enabled": true,
+    "target": "local",
+    "outfile": "$HOME/.gemini/telemetry.log"
+  }
+}
