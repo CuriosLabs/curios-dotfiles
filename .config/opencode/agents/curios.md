@@ -15,10 +15,14 @@ permission:
     "grep *": allow
     "jq *": allow
     "rm *": ask
+    "basecamp *": allow
+    "browser-tool *": allow
     "curios-update *": allow
     "curios-dotfiles *": allow
   edit: ask
   skill:
+    "basecamp": allow
+    "browser-tool": allow
     "curios-update": allow
     "curios-dotfiles": allow
 ---
