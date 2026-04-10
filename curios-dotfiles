@@ -232,7 +232,7 @@ mkdir -p "$INSTALL_DIR"/.agents/skills/
 mkdir -p "$INSTALL_DIR"/.gemini/agents/
 mkdir -p "$INSTALL_DIR"/.gemini/hooks/
 mkdir -p "$INSTALL_DIR"/.npm-packages/
-mkdir -p "$INSTALL_DIR"/.pi/agent/
+mkdir -p "$INSTALL_DIR"/.pi/agent/extensions/
 
 cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
@@ -245,7 +245,7 @@ cp -r "$curios_dotfiles_path"/.agents/skills/ "$INSTALL_DIR"/.agents/
 cp -r "$curios_dotfiles_path"/.gemini/agents/ "$INSTALL_DIR"/.gemini/
 cp -r "$curios_dotfiles_path"/.gemini/hooks/ "$INSTALL_DIR"/.gemini/
 cp -u "$curios_dotfiles_path"/.gemini/settings.json "$INSTALL_DIR"/.gemini/settings.json
-cp -u "$curios_dotfiles_path"/.pi/agent/models.json "$INSTALL_DIR"/.pi/agent/models.json
+cp -ru "$curios_dotfiles_path"/.pi/agent/ "$INSTALL_DIR"/.pi/
 
 chmod -R u+w "$INSTALL_DIR"/.config/
 chmod -R u+w "$INSTALL_DIR"/.agents/
