@@ -28,6 +28,7 @@ stdenvNoCC.mkDerivation rec {
     cp -r .config/ $out/share/
     cp -r .agents/ $out/share/
     cp -r .gemini/ $out/share/
+    cp -r .pi/ $out/share/
     install -D -m 644 -t $out/share/ .npmrc
     install -D -m 644 -t $out/share/ .zshrc
     install -D -m 444 -t $out/share/backgrounds/curios/ wallpapers/*.jpg

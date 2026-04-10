@@ -23,8 +23,9 @@ This repository contains the opinionated configuration files (dotfiles) for the
   - `nvim/`: Neovim configuration (LazyVim based).
   - `zed/`: Zed editor settings and themes.
   - `opencode/`: Opencode AI agent configuration.
-- `.agents/`: Contains Gemini CLI skills (procedural knowledge).
-- `.gemini/`: Contains Gemini CLI subagents (specialized agents).
+- `.agents/`: Contains AI agents skills (procedural knowledge).
+- `.gemini/`: Contains Gemini CLI configuration, agents and hooks.
+- `.pi/`: Contains Pi coding agent configuration, extensions and themes.
 - `themes/`: Predefined COSMIC desktop themes in `.ron` format.
 - `wallpapers/`: Default CuriOS wallpapers.
 - `curios-dotfiles`: The primary installation and management script.
