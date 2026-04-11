@@ -31,7 +31,7 @@ export default function (pi: ExtensionAPI) {
             if (rewritten) {
                 event.input.command = rewritten;
                 // Disable timeout to allow for user interaction and long-running commands
-                event.input.timeout = 0;
+                event.input.timeout = 600;
             }
         }
     });

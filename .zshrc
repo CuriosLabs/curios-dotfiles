@@ -31,7 +31,7 @@ alias matrix="tte -i /etc/nixos/logo.txt --anchor-text c --canvas-height 0 --can
 # Help
 alias help="curios-manager"
 # Pi coding agent launched in a tmux session
-alias pi="tmux new -s pi 'pi'"
+alias skippy="tmux new -s skippy 'pi'"
 
 # Keep 5000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=5000
