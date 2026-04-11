@@ -60,7 +60,7 @@ export default function (pi: ExtensionAPI) {
 
 		// Match .zsh_history format with ISO 8601 timestamp: ': <iso_timestamp>:0;<command>'
 		const timestamp = new Date().toISOString();
-		const line = `: ${timestamp}:0;${command}\n`;
+		const line = `: ${timestamp};${command}\n`;
 
 		try {
 			appendFileSync(logPath, line, "utf8");
