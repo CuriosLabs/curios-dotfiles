@@ -6,8 +6,8 @@ input=$(cat)
 timestamp=$(echo "$input" | jq -r '.timestamp')
 command=$(echo "$input" | jq -r '.tool_input.command')
 
-# Format like zsh_history: [: timestamp; command] in the home directory
-echo ": $timestamp;$command" >>"$HOME/.gemini/gemini_shell_history.txt"
+# Format like zsh_history: ': timestamp;command' in the home directory
+echo ": $timestamp;$command" >>"$HOME/.gemini/shell_history.log"
 
 # Return an empty JSON object to allow the tool to proceed
 echo "{}"
