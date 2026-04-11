@@ -1,7 +1,7 @@
-import { 
-    type ExtensionAPI, 
-    isToolCallEventType, 
-    type UserBashEvent, 
+import {
+    type ExtensionAPI,
+    isToolCallEventType,
+    type UserBashEvent,
     type UserBashEventResult,
     createLocalBashOperations
 } from "@mariozechner/pi-coding-agent";
@@ -12,26 +12,26 @@ import { randomBytes } from "node:crypto";
 
 /**
  * sudo-tmux extension
- * 
- * Intercepts 'bash' tool calls starting with 'sudo' and runs them in a 
+ *
+ * Intercepts 'bash' tool calls starting with 'sudo' and runs them in a
  * tmux split-window if Pi is running inside a tmux session.
- * 
- * This allows the user to interactively enter their password in the 
- * split pane, while still capturing the output and exit code back 
+ *
+ * This allows the user to interactively enter their password in the
+ * split pane, while still capturing the output and exit code back
  * into Pi's bash tool.
  */
 export default function (pi: ExtensionAPI) {
     // 1. Intercept tool calls from the LLM
     pi.on("tool_call", async (event, ctx) => {
         if (!isToolCallEventType("bash", event)) return;
-        
+
         const command = event.input.command.trim();
         if (shouldIntercept(command)) {
             const rewritten = setupInterception(command, ctx);
             if (rewritten) {
                 event.input.command = rewritten;
                 // Disable timeout to allow for user interaction and long-running commands
-                event.input.timeout = 600;
+                event.input.timeout = 0;
             }
         }
     });
@@ -42,7 +42,7 @@ export default function (pi: ExtensionAPI) {
         if (shouldIntercept(command)) {
             const rewritten = setupInterception(command, ctx);
             if (rewritten) {
-                // For user_bash, we provide custom operations that execute the 
+                // For user_bash, we provide custom operations that execute the
                 // rewritten command instead of the original one.
                 const localOps = createLocalBashOperations();
                 return {
@@ -94,7 +94,7 @@ echo $? > "${exitPath}"
             `RET=$(cat "${exitPath}") ; ` +
             `rm -f "${scriptPath}" "${outPath}" "${exitPath}" ; ` +
             `exit $RET`;
-        
+
     } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         if (ctx.hasUI) {
