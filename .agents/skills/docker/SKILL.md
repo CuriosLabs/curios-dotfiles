@@ -1,6 +1,6 @@
 ---
 name: docker
-description: |
+description:
   Manage Docker images, containers, networks, and volumes.
   This skill provides expert guidance on common tasks like listing, starting,
   stopping, and removing containers, as well as debugging with logs and
