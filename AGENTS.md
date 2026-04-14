@@ -65,14 +65,16 @@ To add a new theme (e.g., "MyNewTheme"):
 
 ### 3. Testing Changes
 
-- Use `just lint` to check Nix and Bash files.
-- Use `just test` to run the `curios-dotfiles` script locally.
-- Use `just build` to verify the Nix package builds correctly.
+- Use `nix-shell shell.nix --run "just lint"` to check Nix and Bash files.
+- Use `nix-shell shell.nix --run "just test"` to run the `curios-dotfiles` script
+  locally.
+- Use `nix-shell shell.nix --run "just build"` to verify the Nix package builds
+  correctly.
 
 ### 4. Releasing a New Version
 
-- The `just publish <version>` command automates the tagging and hash update
-  process for the Nix package.
+- The `nix-shell shell.nix --run "just publish <version>"` command automates the
+  tagging and hash update process for the Nix package.
 
 ## Technical Standards
 
