@@ -30,6 +30,8 @@ alias find="fd"
 alias matrix="tte -i /etc/nixos/logo.txt --anchor-text c --canvas-height 0 --canvas-width 0 matrix --rain-color-gradient 92be92 185318 --rain-fall-delay-range '8-25' --rain-column-delay-range '5-15' --rain-time 300 --symbol-swap-chance 0.005 --color-swap-chance 0.001 --resolve-delay 5 --final-gradient-stops 389c38 2cff05 --final-gradient-steps 12 12 --final-gradient-frames 5 --final-gradient-direction diagonal --highlight-color dbffdb"
 # Help
 alias help="curios-manager"
+# Pi coding agent launched in a tmux session
+alias skippy="tmux new -s skippy 'pi'"
 
 # Keep 5000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=5000

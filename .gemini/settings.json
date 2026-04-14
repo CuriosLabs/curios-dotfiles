@@ -1,0 +1,70 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "general": {
+    "vimMode": false,
+    "sessionRetention": {
+      "enabled": true,
+      "maxAge": "30d",
+      "maxCount": 50
+    }
+  },
+  "context": {
+    "fileName": [
+      "GEMINI.md",
+      "AGENTS.md",
+      "CONTEXT.md"
+    ]
+  },
+  "experimental": {
+    "enableAgents": true
+  },
+  "skills": {
+    "enabled": true
+  },
+  "tools": {
+    "useRipgrep": true,
+    "shell": {
+      "showColor": true
+    }
+  },
+  "ui": {
+    "footer": {
+      "hideContextPercentage": false
+    },
+    "hideContextSummary": false,
+    "showMemoryUsage": true,
+    "showModelInfoInChat": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "name": "log-rotator",
+            "type": "command",
+            "command": "$HOME/.gemini/hooks/rotate-log.sh",
+            "description": "Rotates the shell history log file on startup"
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "name": "shell-history-logger",
+            "type": "command",
+            "command": "$HOME/.gemini/hooks/log-shell.sh",
+            "description": "Logs all agent shell commands to a history file"
+          }
+        ]
+      }
+    ]
+  }
+}
