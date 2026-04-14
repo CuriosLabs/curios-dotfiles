@@ -40,6 +40,19 @@
     "showModelInfoInChat": true
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "name": "log-rotator",
+            "type": "command",
+            "command": "$HOME/.gemini/hooks/rotate-log.sh",
+            "description": "Rotates the shell history log file on startup"
+          }
+        ]
+      }
+    ],
     "BeforeTool": [
       {
         "matcher": "run_shell_command",
