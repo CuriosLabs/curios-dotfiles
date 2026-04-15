@@ -239,13 +239,13 @@ cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
 cp -ru "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
-cp -u "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tmux.conf
+cp "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tmux.conf
 cp -ru "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.agents/skills/ "$INSTALL_DIR"/.agents/
 cp -r "$curios_dotfiles_path"/.gemini/agents/ "$INSTALL_DIR"/.gemini/
 cp -r "$curios_dotfiles_path"/.gemini/hooks/ "$INSTALL_DIR"/.gemini/
-cp -u "$curios_dotfiles_path"/.gemini/settings.json "$INSTALL_DIR"/.gemini/settings.json
-cp -ru "$curios_dotfiles_path"/.pi/agent/ "$INSTALL_DIR"/.pi/
+cp "$curios_dotfiles_path"/.gemini/settings.json "$INSTALL_DIR"/.gemini/settings.json
+cp -r "$curios_dotfiles_path"/.pi/agent/ "$INSTALL_DIR"/.pi/
 
 chmod -R u+w "$INSTALL_DIR"/.config/
 chmod -R u+w "$INSTALL_DIR"/.agents/

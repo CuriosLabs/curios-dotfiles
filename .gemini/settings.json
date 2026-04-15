@@ -19,6 +19,9 @@
       "CONTEXT.md"
     ]
   },
+  "agents": {
+    "overrides": {}
+  },
   "experimental": {
     "enableAgents": true
   },
@@ -28,6 +31,7 @@
   "tools": {
     "useRipgrep": true,
     "shell": {
+      "enableInteractiveShell": true,
       "showColor": true
     }
   },
@@ -37,7 +41,8 @@
     },
     "hideContextSummary": false,
     "showMemoryUsage": true,
-    "showModelInfoInChat": true
+    "showModelInfoInChat": true,
+    "theme": "Default"
   },
   "hooks": {
     "SessionStart": [
