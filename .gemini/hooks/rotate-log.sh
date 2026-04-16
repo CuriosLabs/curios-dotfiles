@@ -3,8 +3,14 @@
 # This script rotates the shell history log file if it was last modified on a different day.
 # It is intended to be run as a SessionStart hook in Gemini CLI.
 
-# The log file path
-LOG_FILE="$HOME/.gemini/shell_history.log"
+# Determine the log directory following XDG standards
+STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+LOG_DIR="$STATE_HOME/gemini"
+LOG_FILE="$LOG_DIR/shell_history.log"
+
+# Ensure the directory exists
+mkdir -p "$LOG_DIR"
+
 # Maximum number of rotated files to keep
 MAX_FILES=5
 

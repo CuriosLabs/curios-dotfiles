@@ -7,11 +7,12 @@ import { homedir } from "node:os";
  * Log Shell Extension
  *
  * Logs every bash/shell command call from tool_call and user_bash
- * into $HOME/.pi/agent/shell_history.log in .zsh_history format.
+ * into $XDG_STATE_HOME/pi/shell_history.log in .zsh_history format.
  * Rotates logs on Pi launch (startup).
  */
 export default function (pi: ExtensionAPI) {
-	const logPath = join(homedir(), ".pi", "agent", "shell_history.log");
+	const stateHome = process.env.XDG_STATE_HOME || join(homedir(), ".local", "state");
+	const logPath = join(stateHome, "pi", "shell_history.log");
 
 	try {
 		// Ensure the directory exists once at startup
