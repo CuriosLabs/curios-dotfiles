@@ -225,7 +225,7 @@ mkdir -p "$INSTALL_DIR"/.config/alacritty/
 mkdir -p "$INSTALL_DIR"/.config/btop/
 mkdir -p "$INSTALL_DIR"/.config/cosmic/
 mkdir -p "$INSTALL_DIR"/.config/nvim/
-mkdir -p "$INSTALL_DIR"/.config/opencode/
+mkdir -p "$INSTALL_DIR"/.config/opencode/plugins/
 mkdir -p "$INSTALL_DIR"/.config/tmux/
 mkdir -p "$INSTALL_DIR"/.config/zed/themes/
 mkdir -p "$INSTALL_DIR"/.agents/skills/
