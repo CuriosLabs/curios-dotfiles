@@ -238,7 +238,7 @@ cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
-cp -ru "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
 cp "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tmux.conf
 cp -ru "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.agents/skills/ "$INSTALL_DIR"/.agents/
@@ -250,6 +250,7 @@ cp -r "$curios_dotfiles_path"/.pi/agent/ "$INSTALL_DIR"/.pi/
 chmod -R u+w "$INSTALL_DIR"/.config/
 chmod -R u+w "$INSTALL_DIR"/.agents/
 chmod -R u+w "$INSTALL_DIR"/.gemini/
+chmod -R u+w "$INSTALL_DIR"/.pi/
 
 #------------- Update COSMIC keyboard layout
 sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
