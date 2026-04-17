@@ -81,9 +81,9 @@ should be searched and installed as a regular NixOS package:
 
 ```bash
 # Notice the 'package_attr_name' value of the JSON output, first result should be the best match
-curios-update --search-pkgs <name>
 # Also notice the 'package_programs' value is a JSON array of programs provided by this package.
-# Pass the 'package_attr_name' as a parameter
+curios-update --search-pkgs <name>
+# Pass the 'package_attr_name' as a parameter to '--add-pkg' option.
 sudo curios-update --add-pkg <pkg_attr_name>
 ```
 
