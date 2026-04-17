@@ -6,7 +6,7 @@ description:
   change or check a system or module configuration.
 metadata:
   author: CuriosLabs
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Curios System Manager Skill
@@ -82,6 +82,7 @@ should be searched and installed as a regular NixOS package:
 ```bash
 # Notice the 'package_attr_name' value of the JSON output, first result should be the best match
 curios-update --search-pkgs <name>
+# Also notice the 'package_programs' value is an JSON array of programs provided by this package.
 # Pass the 'package_attr_name' as a parameter
 sudo curios-update --add-pkg <pkg_attr_name>
 ```
