@@ -8,6 +8,9 @@ description:
  "take a screenshot", "scrape data from a page", "test this web app",
  "login to a site", "automate browser actions", or any task requiring programmatic
  web interaction.
+metadata:
+  author: CuriosLabs
+  version: "1.0.0"
 ---
 
 # Browser Tools Skill

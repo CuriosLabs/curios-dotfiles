@@ -3,6 +3,9 @@ name: curios-dotfiles
 description:
  Install and manage CuriOS dotfiles, themes, and COSMIC desktop settings using
  the `curios-dotfiles` tool.
+metadata:
+  author: CuriosLabs
+  version: "1.0.0"
 ---
 
 # Curios Dotfiles Skill

@@ -5,6 +5,9 @@ description:
   This skill provides expert guidance on common tasks like listing, starting,
   stopping, and removing containers, as well as debugging with logs and
   executing commands inside running containers.
+metadata:
+  author: CuriosLabs
+  version: "1.0.0"
 ---
 
 # Docker Skill

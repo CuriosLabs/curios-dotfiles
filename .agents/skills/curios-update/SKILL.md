@@ -4,6 +4,9 @@ description:
   Manage CuriOS a Linux distribution based on NixOS. Use when the user asks to do
   a system update or upgrade, add a package, check if a package is installed,
   change or check a system or module configuration.
+metadata:
+  author: CuriosLabs
+  version: "1.0.0"
 ---
 
 # Curios System Manager Skill
