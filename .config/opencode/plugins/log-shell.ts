@@ -1,3 +1,4 @@
+import { type Plugin } from "@opencode-ai/plugin";
 import { appendFileSync, mkdirSync, existsSync, renameSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
@@ -9,7 +10,7 @@ import { homedir } from "node:os";
  * into $XDG_STATE_HOME/opencode/shell_history.log in .zsh_history format.
  * Rotates logs on startup.
  */
-export default async function ({ directory }: { directory: string }) {
+const LogShellPlugin: Plugin = async ({ directory }) => {
   const stateHome = process.env.XDG_STATE_HOME || join(homedir(), ".local", "state");
   const logPath = join(stateHome, "opencode", "shell_history.log");
 
@@ -48,12 +49,16 @@ export default async function ({ directory }: { directory: string }) {
     }
   };
 
-  const logCommand = (command: string) => {
+  const logCommand = (command: string, description?: string) => {
     if (!command) return;
 
-    // Match .zsh_history format: ': <iso_timestamp>;<command>' (as in Pi extension)
+    // Match .zsh_history format: ': <iso_timestamp>;<command>'
+    // If description is present, prepend it as a comment
     const timestamp = new Date().toISOString();
-    const line = `: ${timestamp};${command}\n`;
+    let line = `: ${timestamp};${command}\n`;
+    if (description) {
+      line = `# ${description}\n${line}`;
+    }
 
     try {
       appendFileSync(logPath, line, "utf8");
@@ -69,10 +74,14 @@ export default async function ({ directory }: { directory: string }) {
     },
 
     // 1. Intercept tool calls from the LLM
-    "tool.execute.before": async (input: { tool: string; args: { command?: string } }) => {
+    "tool.execute.before": async (
+      input: { tool: string },
+      output: { args?: { command?: string; description?: string } }
+    ) => {
       if (input.tool === "bash") {
-        const command = input.args.command;
-        if (command) logCommand(command);
+        const command = output.args?.command;
+        const description = output.args?.description;
+        if (command) logCommand(command, description);
       }
     },
 
@@ -81,4 +90,6 @@ export default async function ({ directory }: { directory: string }) {
       logCommand(input.command);
     }
   };
-}
+};
+
+export default LogShellPlugin;
