@@ -34,6 +34,7 @@ lint:
   @echo 'Linting TypeScript files...'
   NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/browser-tools/scripts/eslint.config.mjs ./.agents/skills/browser-tools/scripts/*.ts && echo 'Browser-Tools: SUCCESS'
   NODE_PATH=$(npm root -g) eslint -c ./.pi/agent/extensions/eslint.config.mjs ./.pi/agent/extensions/*.ts && echo 'Pi Extensions: SUCCESS'
+  NODE_PATH=$(npm root -g) eslint -c ./.pi/agent/extensions/eslint.config.mjs ./.config/opencode/plugins/*.ts && echo 'Opencode Plugins: SUCCESS'
 
 # Complete publish process: lint, tag then build and update hash signature, finally push on github.
 publish VERSION:

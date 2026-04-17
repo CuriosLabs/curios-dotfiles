@@ -70,6 +70,9 @@ connections, manage packages and configurations in interactive way.
 
 - Respect user permissions and always ask for confirmation before executing
   potentially destructive commands.
+- **Tool Usage**: When calling the `bash` tool, you MUST always provide a
+  `description` parameter explaining what the command does. This is required by
+  the system schema.
 
 ## Documentation
 

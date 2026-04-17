@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json",
   "security": {
     "auth": {
       "selectedType": "oauth-personal"
@@ -19,6 +20,9 @@
       "CONTEXT.md"
     ]
   },
+  "agents": {
+    "overrides": {}
+  },
   "experimental": {
     "enableAgents": true
   },
@@ -28,6 +32,7 @@
   "tools": {
     "useRipgrep": true,
     "shell": {
+      "enableInteractiveShell": true,
       "showColor": true
     }
   },
@@ -37,7 +42,8 @@
     },
     "hideContextSummary": false,
     "showMemoryUsage": true,
-    "showModelInfoInChat": true
+    "showModelInfoInChat": true,
+    "theme": "Default"
   },
   "hooks": {
     "SessionStart": [
