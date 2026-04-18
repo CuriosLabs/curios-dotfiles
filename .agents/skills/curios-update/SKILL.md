@@ -37,7 +37,7 @@ utility.
 | Show all module settings | `curios-update --show-modules` |
 | Search for a NixOS package | `curios-update --search-pkgs <name>` |
 | Install a NixOS package | `sudo curios-update --add-pkg <attr_name>` |
-| Determine system language | `curios-update --nixos-option curios.system.keyboard | grep -A 1 "Value"` |
+| Determine system language | `curios-update --nixos-option curios.system.keyboard` |
 | Apply a theme (One-Dark, Catppuccin-Macchiato, Tokyonight) and dotfiles | `curios-dotfiles --lang <language> --themes <theme> <directory>` |
 
 ## Common workflows
