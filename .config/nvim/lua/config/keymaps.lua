@@ -7,7 +7,9 @@ vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
 -- Normal mode mappings
 vim.keymap.set("n", "<leader>wt", ":vsplit | terminal<CR>", { desc = "Terminal in vertical split" })
-vim.keymap.set("n", "<leader>wg", ":vsplit | terminal gemini<CR>", { desc = "Gemini in vertical split" })
+vim.keymap.set("n", "<leader>wG", ":vsplit | terminal gemini<CR>", { desc = "Gemini-cli in vertical split" })
+vim.keymap.set("n", "<leader>wO", ":vsplit | terminal opencode<CR>", { desc = "Opencode AI in vertical split" })
+vim.keymap.set("n", "<leader>wP", ":vsplit | terminal pi<CR>", { desc = "Pi AI in vertical split" })
 vim.keymap.set("n", "<leader><tab>t", ":tabnew | terminal<CR>", { desc = "Terminal in new tab" })
 vim.keymap.set("n", "<leader><tab>p", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 vim.keymap.set("n", "<leader><tab>n", "<cmd>tabnext<cr>", { desc = "Next Tab" })
