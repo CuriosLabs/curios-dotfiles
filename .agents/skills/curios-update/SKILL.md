@@ -3,7 +3,12 @@ name: curios-update
 description:
   Manage CuriOS a Linux distribution based on NixOS. Use when the user asks to do
   a system update or upgrade, add a package, check if a package is installed,
-  change or check a system or module configuration.
+  change or check a system or module configuration using the `curios-update` tool.
+  Install and manage CuriOS dotfiles, themes, and COSMIC desktop settings using
+  the `curios-dotfiles` tool.
+metadata:
+  author: CuriosLabs
+  version: "1.1.0"
 ---
 
 # Curios System Manager Skill
@@ -12,6 +17,9 @@ This skill provides a comprehensive interface for managing the CuriOS Linux syst
 It leverages the `curios-update` utility to perform system-level operations.
 CuriOS follows a highly modular architecture, leveraging Nix modules to define
 its system configuration.
+This skill also allows the agent to install and configure CuriOS-specific dotfiles
+and themes for COSMIC desktop environment. It leverages the `curios-dotfiles`
+utility.
 
 ## Quick reference
 
@@ -29,6 +37,8 @@ its system configuration.
 | Show all module settings | `curios-update --show-modules` |
 | Search for a NixOS package | `curios-update --search-pkgs <name>` |
 | Install a NixOS package | `sudo curios-update --add-pkg <attr_name>` |
+| Determine system language | `curios-update --nixos-option curios.system.keyboard` |
+| Apply a theme (One-Dark, Catppuccin-Macchiato, Tokyonight) and dotfiles | `curios-dotfiles --lang <language> --themes <theme> <directory>` |
 
 ## Common workflows
 
@@ -78,9 +88,27 @@ should be searched and installed as a regular NixOS package:
 
 ```bash
 # Notice the 'package_attr_name' value of the JSON output, first result should be the best match
+# Also notice the 'package_programs' value is a JSON array of programs provided by this package.
 curios-update --search-pkgs <name>
-# Pass the 'package_attr_name' as a parameter
+# Pass the 'package_attr_name' as a parameter to '--add-pkg' option.
 sudo curios-update --add-pkg <pkg_attr_name>
+```
+
+## Change desktop theme, keyboard layout, update dotfiles
+
+- **Discovery**: Use `curios-dotfiles --help` to check available themes and options.
+- Available themes: `Catppuccin-Macchiato`, `Everforest-Medium`, `Gruvbox-Dark`,
+  `Hackers-Green`, `Kanagawa`, `Nord-Dark`, `Nord-Light`, `One-Dark`, `Tokyonight`.
+- Default keyboard layout is `us`.
+- Default theme is `One-Dark`.
+
+Changing the COSMIC desktop theme and keyboard layout:
+
+```bash
+# Determine the current keyboard layout/language
+curios-update --nixos-option curios.system.keyboard | grep -A 1 "Value"
+# Change the user $HOME desktop theme to Gruvbox-Dark
+curios-dotfiles --lang <language> --themes 'Gruvbox-Dark' $HOME
 ```
 
 ## When to use me
@@ -91,6 +119,10 @@ sudo curios-update --add-pkg <pkg_attr_name>
   timezones, enabling browsers).
 - When checking for system updates or upgrading to a new CuriOS release.
 - When inspecting current NixOS or CuriOS configuration options.
+- When a user wants to install the CuriOS dotfiles in their home directory.
+- When a user wants to change their overall system theme (colors for Alacritty,
+  Neovim, Zed, etc.).
+- When a user needs to set their COSMIC keyboard layout during dotfiles installation.
 
 ## Important Notes
 
