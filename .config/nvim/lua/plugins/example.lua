@@ -118,21 +118,14 @@ return {
   -- add more treesitter parsers
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     opts = {
       ensure_installed = {
-        "bash",
         "html",
         "javascript",
         "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
         "tsx",
         "typescript",
-        "vim",
         "yaml",
       },
     },
@@ -143,6 +136,7 @@ return {
   -- If you'd rather extend the default config, use the code below instead:
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     opts = function(_, opts)
       -- add tsx and treesitter
       vim.list_extend(opts.ensure_installed, {
