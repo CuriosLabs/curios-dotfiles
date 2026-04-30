@@ -134,7 +134,7 @@ apply_theme() {
 
   # 6. COSMIC desktop
   # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
-  # cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
 }
 
 #------------- Scripts arguments parse options
