@@ -15,7 +15,7 @@ let fileConfig: any = {};
 if (fs.existsSync(CONFIG_PATH)) {
   try {
     fileConfig = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
-  } catch (e) {
+  } catch {
     console.error(`Warning: Failed to parse config file at ${CONFIG_PATH}`);
   }
 }
