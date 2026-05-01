@@ -133,7 +133,9 @@ apply_theme() {
   jq -n '{ "BrowserThemeColor": "'$color_theme'" }' >"$bravethemespolicyfile"
 
   # 6. COSMIC desktop
-  cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  if command -v cosmic-settings >/dev/null 2>&1; then
+    cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  fi
 }
 
 #------------- Scripts arguments parse options

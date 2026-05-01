@@ -34,10 +34,15 @@ return {
       local parsers = { "html", "javascript", "json", "tsx", "typescript", "yaml" }
       vim.api.nvim_create_autocmd("VimEnter", {
         callback = function()
-          local ok, p = pcall(require, "nvim-treesitter.parsers")
+          local ok, ts = pcall(require, "nvim-treesitter")
           if ok then
+            local installed = ts.get_installed()
+            local is_installed = {}
+            for _, lang in ipairs(installed) do
+              is_installed[lang] = true
+            end
             for _, lang in ipairs(parsers) do
-              if not p.has_parser(lang) then
+              if not is_installed[lang] then
                 vim.cmd("TSInstall " .. lang)
               end
             end
