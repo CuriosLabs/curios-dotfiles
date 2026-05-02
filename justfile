@@ -33,6 +33,7 @@ lint:
   shellcheck --color=always -f tty -x ./curios-dotfiles .gemini/hooks/*.sh && echo 'Shellcheck: SUCCESS'
   @echo 'Linting TypeScript files...'
   NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/browser-tools/scripts/eslint.config.mjs ./.agents/skills/browser-tools/scripts/*.ts && echo 'Browser-Tools: SUCCESS'
+  NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/email/scripts/eslint.config.mjs ./.agents/skills/email/scripts/*.ts && echo 'Email-Skill: SUCCESS'
   NODE_PATH=$(npm root -g) eslint -c ./.pi/agent/extensions/eslint.config.mjs ./.pi/agent/extensions/*.ts && echo 'Pi Extensions: SUCCESS'
   NODE_PATH=$(npm root -g) eslint -c ./.pi/agent/extensions/eslint.config.mjs ./.config/opencode/plugins/*.ts && echo 'Opencode Plugins: SUCCESS'
 

@@ -7,7 +7,7 @@ description:
   executing commands inside running containers.
 metadata:
   author: CuriosLabs
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Docker Skill
@@ -55,6 +55,14 @@ Docker, always prefer targeted commands and verify state changes.
   `docker network disconnect <network_name> <container_name>`
 - **Remove a network**: `docker network rm <network_name>`
 - **Prune unused networks**: `docker network prune`
+
+## Volume Operations
+
+- **List volumes**: `docker volume ls`
+- **Create a volume**: `docker volume create <volume_name>`
+- **Inspect volume details**: `docker volume inspect <volume_name>`
+- **Remove a volume**: `docker volume rm <volume_name>`
+- **Prune unused volumes**: `docker volume prune`
 
 ## Docker Compose Operations
 

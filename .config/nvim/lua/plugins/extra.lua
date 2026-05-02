@@ -18,27 +18,38 @@ return {
     },
   },
 
-  -- add more treesitter parsers
+  -- add more treesitter parsers (Neovim 0.12+)
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "bash",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-      },
-    },
+    branch = "main",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter").setup({
+        auto_install = true,
+      })
+    end,
+    -- In 0.12, ensure_installed is handled via the new TSInstall command or system packages.
+    -- We can automate it here for a better OOTB experience.
+    init = function()
+      local parsers = { "html", "javascript", "json", "tsx", "typescript", "yaml" }
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+          local ok, ts = pcall(require, "nvim-treesitter")
+          if ok then
+            local installed = ts.get_installed()
+            local is_installed = {}
+            for _, lang in ipairs(installed) do
+              is_installed[lang] = true
+            end
+            for _, lang in ipairs(parsers) do
+              if not is_installed[lang] then
+                vim.cmd("TSInstall " .. lang)
+              end
+            end
+          end
+        end,
+      })
+    end,
   },
 
   -- add DiffViewOpen

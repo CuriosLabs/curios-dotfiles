@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.26"
+readonly SCRIPT_VERSION="0.27.1"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -133,8 +133,9 @@ apply_theme() {
   jq -n '{ "BrowserThemeColor": "'$color_theme'" }' >"$bravethemespolicyfile"
 
   # 6. COSMIC desktop
-  # TODO:: update COSMIC theme, for COSMIC 1.0.3 or superior:
-  # cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  if command -v cosmic-settings >/dev/null 2>&1; then
+    cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  fi
 }
 
 #------------- Scripts arguments parse options

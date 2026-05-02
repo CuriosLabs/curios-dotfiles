@@ -46,3 +46,25 @@ if watcher then
     end)
   )
 end
+
+-- Enable Treesitter highlighting (Neovim 0.12+)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "bash",
+    "html",
+    "javascript",
+    "json",
+    "lua",
+    "markdown",
+    "python",
+    "query",
+    "regex",
+    "tsx",
+    "typescript",
+    "vim",
+    "yaml",
+  },
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
