@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 
 -- Terminal mode mappings
-vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<esc><esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
 -- Normal mode mappings
 vim.keymap.set("n", "<leader>wt", ":vsplit | terminal<CR>", { desc = "Terminal in vertical split" })
