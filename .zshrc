@@ -200,7 +200,7 @@ fi
 
 # Logo animation on launch
 if [ -f /etc/nixos/logo.txt ]; then
-  tte --frame-rate 120 -i /etc/nixos/logo.txt --anchor-text c --canvas-width 0 sweep --final-gradient-stops 12488B 2AA1B3 --final-gradient-steps 12 12 --final-gradient-direction diagonal
+  tte --frame-rate 120 -i /etc/nixos/logo.txt --anchor-text c --canvas-width 0 sweep --final-gradient-stops 1E78E4 4FD2FD --final-gradient-steps 12 12 --final-gradient-direction diagonal
 fi
 
 # Automated list directory with eza after a cd command.
