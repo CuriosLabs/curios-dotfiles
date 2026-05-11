@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.27.2"
+readonly SCRIPT_VERSION="0.28.1"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -101,6 +101,11 @@ apply_theme() {
   # 1. Alacritty
   if [ -f "$install_dir/.config/alacritty/$theme_name.toml" ]; then
     cp "$install_dir/.config/alacritty/$theme_name.toml" "$install_dir/.config/alacritty/alacritty.toml"
+  fi
+
+  # 1-bis. Ghostty
+  if [ -f "$install_dir/.config/ghostty/$theme_name.config" ]; then
+    cp "$install_dir/.config/ghostty/$theme_name.config" "$install_dir/.config/ghostty/theme.config"
   fi
 
   # 2. opencode tui.json
@@ -225,6 +230,7 @@ install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc
 mkdir -p "$INSTALL_DIR"/.config/alacritty/
 mkdir -p "$INSTALL_DIR"/.config/btop/
 mkdir -p "$INSTALL_DIR"/.config/cosmic/
+mkdir -p "$INSTALL_DIR"/.config/ghostty/
 mkdir -p "$INSTALL_DIR"/.config/nvim/
 mkdir -p "$INSTALL_DIR"/.config/opencode/plugins/
 mkdir -p "$INSTALL_DIR"/.config/tmux/
@@ -238,6 +244,7 @@ mkdir -p "$INSTALL_DIR"/.pi/agent/extensions/
 cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/ghostty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
 cp "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tmux.conf

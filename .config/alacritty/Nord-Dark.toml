@@ -24,9 +24,17 @@ style = "Italic"
 family = "JetBrains Mono"
 style = "Regular"
 
+[colors.cursor]
+cursor = '#eceff4'
+text = '#282828'
+
 [colors.primary]
 background = '#2e3440'
 foreground = '#d8dee9'
+
+[colors.selection]
+background = '#eceff4'
+text = '#4c566a'
 
 [colors.normal]
 black = '#3b4252'
@@ -39,7 +47,7 @@ cyan = '#88c0d0'
 white = '#e5e9f0'
 
 [colors.bright]
-black = '#4c566a'
+black = '#596377'
 red = '#bf616a'
 green = '#a3be8c'
 yellow = '#ebcb8b'
