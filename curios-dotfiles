@@ -103,6 +103,11 @@ apply_theme() {
     cp "$install_dir/.config/alacritty/$theme_name.toml" "$install_dir/.config/alacritty/alacritty.toml"
   fi
 
+  # 1-bis. Ghostty
+  if [ -f "$install_dir/.config/ghostty/$theme_name.config" ]; then
+    cp "$install_dir/.config/ghostty/$theme_name.config" "$install_dir/.config/ghostty/theme.config"
+  fi
+
   # 2. opencode tui.json
   if [ -f "$install_dir/.config/opencode/tui.json" ]; then
     sed -i "s/\"theme\": \".*\"/\"theme\": \"$tui_theme\"/" "$install_dir/.config/opencode/tui.json"
