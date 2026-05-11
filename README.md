@@ -55,3 +55,8 @@ the hash signature for the Nix package:
   ```
 
 - **Supported Version**: NixOS 25.11 or later.
+
+## Colors/themes references
+
+- [iTerm2 colors schemes](https://iterm2colorschemes.com/) for terminal colors.
+- [COSMIC themes](https://cosmic-themes.org/).
