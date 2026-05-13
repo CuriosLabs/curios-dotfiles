@@ -3,6 +3,8 @@
 -- Add any additional options here
 
 vim.opt.colorcolumn = "80"
+vim.opt.number = true
+vim.opt.relativenumber = false
 
 -- Treesitter folding and indentation (Neovim 0.12+)
 vim.opt.foldmethod = "expr"

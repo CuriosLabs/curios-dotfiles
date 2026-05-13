@@ -78,8 +78,10 @@ return {
     opts = {
       style = "dark", -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer'
       transparent = false,
+      term_colors = false, -- Disable built-in terminal colors to use our custom ones
     },
   },
+
 
   -- Configure LazyVim to load onedark
   {
