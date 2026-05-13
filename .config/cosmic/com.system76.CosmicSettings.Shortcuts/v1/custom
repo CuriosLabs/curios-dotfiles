@@ -6,7 +6,7 @@
         ],
         key: "t",
         description: Some("Process Management - btop"),
-    ): Spawn("alacritty -e btop"),
+    ): Spawn("xdg-terminal-exec btop"),
     (
         modifiers: [
             Super,
@@ -30,7 +30,7 @@
         ],
         key: "Delete",
         description: Some("Process Management - btop"),
-    ): Spawn("alacritty -e btop"),
+    ): Spawn("xdg-terminal-exec btop"),
     (
         modifiers: [
             Super,
@@ -46,14 +46,14 @@
         ],
         key: "d",
         description: Some("Docker - lazydocker"),
-    ): Spawn("alacritty -e lazydocker"),
+    ): Spawn("xdg-terminal-exec lazydocker"),
     (
         modifiers: [
             Super,
         ],
         key: "Return",
         description: Some("CuriOS Manager"),
-    ): Spawn("alacritty -e curios-manager"),
+    ): Spawn("xdg-terminal-exec curios-manager"),
     (
         modifiers: [
             Super,
