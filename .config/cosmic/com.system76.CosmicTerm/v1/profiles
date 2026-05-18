@@ -2,10 +2,10 @@
     0: (
         name: "Default-CuriOS",
         command: "",
-        syntax_theme_dark: "CuriOS",
-        syntax_theme_light: "CuriOS",
+        syntax_theme_dark: "CuriOS Dark",
+        syntax_theme_light: "COSMIC Light",
         tab_title: "",
         working_directory: "",
-        hold: false,
+        drain_on_exit: false,
     ),
 }
