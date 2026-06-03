@@ -9,7 +9,7 @@
       "fd *": "allow",
       "find *": "allow",
       "git *": "allow",
-      "git commit *": "deny",
+      "git commit *": "ask",
       "git push *": "deny",
       "grep *": "allow",
       "ls *": "allow",
