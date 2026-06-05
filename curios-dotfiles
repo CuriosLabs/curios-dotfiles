@@ -231,6 +231,7 @@ mkdir -p "$INSTALL_DIR"/.config/alacritty/
 mkdir -p "$INSTALL_DIR"/.config/btop/
 mkdir -p "$INSTALL_DIR"/.config/cosmic/
 mkdir -p "$INSTALL_DIR"/.config/ghostty/
+mkdir -p "$INSTALL_DIR"/.config/keepassxc/
 mkdir -p "$INSTALL_DIR"/.config/nvim/
 mkdir -p "$INSTALL_DIR"/.config/opencode/plugins/
 mkdir -p "$INSTALL_DIR"/.config/tmux/
@@ -244,6 +245,7 @@ cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/ghostty/ "$INSTALL_DIR"/.config/
+cp --update=none "$curios_dotfiles_path"/.config/keepassxc/keepassxc.ini "$INSTALL_DIR"/.config/keepassxc/keepassxc.ini
 cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
 cp "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tmux.conf
