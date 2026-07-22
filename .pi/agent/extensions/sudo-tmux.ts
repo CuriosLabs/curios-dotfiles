@@ -4,7 +4,7 @@ import {
     type UserBashEvent,
     type UserBashEventResult,
     createLocalBashOperations
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 import { writeFileSync, chmodSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
