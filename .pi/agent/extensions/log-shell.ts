@@ -1,4 +1,4 @@
-import { type ExtensionAPI, isToolCallEventType } from "@mariozechner/pi-coding-agent";
+import { type ExtensionAPI, isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import { appendFileSync, mkdirSync, existsSync, renameSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
