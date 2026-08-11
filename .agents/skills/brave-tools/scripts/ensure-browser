@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# .agents/skills/browser-tools/scripts/ensure-browser
+# .agents/skills/brave-tools/scripts/ensure-browser
 # Ensures a browser is running with remote debugging on port 9222.
 
 PORT=9222

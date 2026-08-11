@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# .agents/skills/browser-tools/browser-tool
-# A bash wrapper to execute browser tasks using ts-node.
+# .agents/skills/brave-tools/brave-tool
+# A bash wrapper to execute Brave browser tasks using ts-node.
 
 # Determine the directory of the script
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -7,7 +7,7 @@ async function main() {
   const command = args[0];
 
   if (!command) {
-    console.log('Usage: browser-tool <command> [args]');
+    console.log('Usage: brave-tool <command> [args]');
     console.log('Commands: open-url, list-tabs, switch-tab, close-tab, navigate, reload, back, forward, click, click-text, hover, fill, clear, press-key, scroll, extract, get-html, screenshot, accessibility-snapshot, eval');
     process.exit(1);
   }
