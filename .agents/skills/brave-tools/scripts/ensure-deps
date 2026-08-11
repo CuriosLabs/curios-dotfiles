@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# .agents/skills/browser-tools/scripts/ensure-deps
+# .agents/skills/brave-tools/scripts/ensure-deps
 # Ensures that puppeteer-core, ts-node, and typescript are installed globally.
 
 DEPS=("puppeteer-core" "ts-node" "typescript" "eslint" "typescript-eslint")
