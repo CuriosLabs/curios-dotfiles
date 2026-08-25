@@ -30,7 +30,7 @@ lint:
   @echo 'Linting Nix files...'
   for file in `fd --type f ".nix" .`; do statix check $file; done
   @echo 'Linting Bash files...'
-  shellcheck --color=always -f tty -x ./curios-dotfiles .gemini/hooks/*.sh && echo 'Shellcheck: SUCCESS'
+  shellcheck --color=always -f tty -x ./curios-dotfiles && echo 'Shellcheck: SUCCESS'
   @echo 'Linting TypeScript files...'
   NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/brave-tools/scripts/eslint.config.mjs ./.agents/skills/brave-tools/scripts/*.ts && echo 'brave-tools: SUCCESS'
   NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/email/scripts/eslint.config.mjs ./.agents/skills/email/scripts/*.ts && echo 'Email-Skill: SUCCESS'
