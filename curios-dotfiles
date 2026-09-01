@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.33.0"
+readonly SCRIPT_VERSION="0.34.0"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -258,6 +258,7 @@ chmod -R u+w "$INSTALL_DIR"/.pi/
 
 # Remove old agents skill
 rm -rf "$INSTALL_DIR"/.agents/skills/browser-tools
+rm -rf "$INSTALL_DIR"/.agents/skills/learn
 
 #------------- Update COSMIC keyboard layout
 sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
