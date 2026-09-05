@@ -131,6 +131,9 @@ apply_theme() {
   # 4. Herdr
   if [ -n "$herdr_theme" ] && [ -f "$install_dir/.config/herdr/config.toml" ]; then
     sed -i "s/^name = \".*\"/name = \"$herdr_theme\"/" "$install_dir/.config/herdr/config.toml"
+    if command -v herdr >/dev/null 2>&1; then
+      herdr server reload-config
+    fi
   fi
 
   # 5. Zed
