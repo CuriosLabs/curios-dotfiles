@@ -44,6 +44,7 @@ apply_theme() {
   local theme_name="$1"
   local install_dir="$2"
   local color_theme=""
+  local herdr_theme=""
   local nvim_theme=""
   local tui_theme=""
   local bravethemespolicyfile="/etc/brave/policies/managed/themes.json"
@@ -53,46 +54,55 @@ apply_theme() {
   case "$theme_name" in
   Catppuccin-Macchiato)
     color_theme="#24273a"
+    herdr_theme="catppuccin"
     nvim_theme="catppuccin-macchiato"
     tui_theme="catppuccin-macchiato"
     ;;
   Everforest-Medium)
     color_theme="#2d353b"
+    herdr_theme="kanagawa-lotus"
     nvim_theme="everforest"
     tui_theme="everforest"
     ;;
   Gruvbox-Dark)
     color_theme="#282828"
+    herdr_theme="gruvbox"
     nvim_theme="gruvbox"
     tui_theme="gruvbox"
     ;;
   Hackers-Green)
     color_theme="#000000"
+    herdr_theme="terminal"
     nvim_theme="melange"
     tui_theme="matrix"
     ;;
   Kanagawa)
     color_theme="#1f1f28"
+    herdr_theme="kanagawa"
     nvim_theme="kanagawa"
     tui_theme="kanagawa"
     ;;
   Nord-Dark)
     color_theme="#2e3440"
+    herdr_theme="nord"
     nvim_theme="nord"
     tui_theme="nord"
     ;;
   Nord-Light)
     color_theme="#eceff4"
+    herdr_theme="one-light"
     nvim_theme="nord"
     tui_theme="nord"
     ;;
   One-Dark)
     color_theme="#20252c"
+    herdr_theme="one-dark"
     nvim_theme="onedark"
     tui_theme="one-dark"
     ;;
   Tokyonight)
     color_theme="#1a1b26"
+    herdr_theme="tokyo-night"
     nvim_theme="tokyonight"
     tui_theme="tokyonight"
     ;;
@@ -118,7 +128,12 @@ apply_theme() {
     sed -i "s/colorscheme = \".*\"/colorscheme = \"$nvim_theme\"/" "$install_dir/.config/nvim/lua/plugins/colorschemes.lua"
   fi
 
-  # 4. Zed
+  # 4. Herdr
+  if [ -n "$herdr_theme" ] && [ -f "$install_dir/.config/herdr/config.toml" ]; then
+    sed -i "s/^name = \".*\"/name = \"$herdr_theme\"/" "$install_dir/.config/herdr/config.toml"
+  fi
+
+  # 5. Zed
   if [ -f "$install_dir/.config/zed/settings.json" ]; then
     if [ "$theme_name" == "Nord-Light" ]; then
       sed -i "s/\"mode\": \".*\"/\"mode\": \"light\"/" "$install_dir/.config/zed/settings.json"
@@ -129,7 +144,7 @@ apply_theme() {
     fi
   fi
 
-  # 5. Brave Browser (Manual Reference)
+  # 6. Brave Browser (Manual Reference)
   if [ ! -f "$bravethemespolicyfile" ]; then
     sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
     sudo touch "$bravethemespolicyfile"
@@ -137,7 +152,7 @@ apply_theme() {
   fi
   jq -n '{ "BrowserThemeColor": "'$color_theme'" }' >"$bravethemespolicyfile"
 
-  # 6. COSMIC desktop
+  # 7. COSMIC desktop
   if command -v cosmic-settings >/dev/null 2>&1; then
     cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
   fi
@@ -231,6 +246,7 @@ mkdir -p "$INSTALL_DIR"/.config/alacritty/
 mkdir -p "$INSTALL_DIR"/.config/btop/
 mkdir -p "$INSTALL_DIR"/.config/cosmic/
 mkdir -p "$INSTALL_DIR"/.config/ghostty/
+mkdir -p "$INSTALL_DIR"/.config/herdr/
 mkdir -p "$INSTALL_DIR"/.config/keepassxc/
 mkdir -p "$INSTALL_DIR"/.config/nvim/
 mkdir -p "$INSTALL_DIR"/.config/opencode/plugins/
@@ -245,6 +261,7 @@ cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/ghostty/ "$INSTALL_DIR"/.config/
+cp -r "$curios_dotfiles_path"/.config/herdr/ "$INSTALL_DIR"/.config/
 cp --update=none "$curios_dotfiles_path"/.config/keepassxc/keepassxc.ini "$INSTALL_DIR"/.config/keepassxc/keepassxc.ini
 cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
