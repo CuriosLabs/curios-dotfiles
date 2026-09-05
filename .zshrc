@@ -25,6 +25,8 @@ alias top="btop"
 alias df="duf"
 alias du="dust"
 alias find="fd"
+# CuriOS logo animation
+alias logo="tte --frame-rate 120 -i /etc/nixos/logo.txt --anchor-text c --canvas-width 0 sweep --final-gradient-stops 1E78E4 4FD2FD --final-gradient-steps 12 12 --final-gradient-direction diagonal"
 # Matrix effect
 # alacritty --option 'window.startup_mode="Fullscreen"' -e tte.... ???? for a screensaver
 alias matrix="tte -i /etc/nixos/logo.txt --anchor-text c --canvas-height 0 --canvas-width 0 matrix --rain-color-gradient 92be92 185318 --rain-fall-delay-range '8-25' --rain-column-delay-range '5-15' --rain-time 300 --symbol-swap-chance 0.005 --color-swap-chance 0.001 --resolve-delay 5 --final-gradient-stops 389c38 2cff05 --final-gradient-steps 12 12 --final-gradient-frames 5 --final-gradient-direction diagonal --highlight-color dbffdb"
@@ -196,11 +198,6 @@ export PATH="$HOME/.local/bin:$PATH"
 # source env default file
 if [ -f "$HOME/.env" ]; then
   source "$HOME/.env"
-fi
-
-# Logo animation on launch
-if [ -f /etc/nixos/logo.txt ]; then
-  tte --frame-rate 120 -i /etc/nixos/logo.txt --anchor-text c --canvas-width 0 sweep --final-gradient-stops 1E78E4 4FD2FD --final-gradient-steps 12 12 --final-gradient-direction diagonal
 fi
 
 # Automated list directory with eza after a cd command.
