@@ -239,6 +239,7 @@ mkdir -p "$INSTALL_DIR"/.config/zed/themes/
 mkdir -p "$INSTALL_DIR"/.agents/skills/
 mkdir -p "$INSTALL_DIR"/.npm-packages/
 mkdir -p "$INSTALL_DIR"/.pi/agent/extensions/
+mkdir -p "$INSTALL_DIR"/.zsh/completions/
 
 cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
@@ -251,10 +252,12 @@ cp "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tm
 cp -ru "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
 cp -r "$curios_dotfiles_path"/.agents/skills/ "$INSTALL_DIR"/.agents/
 cp -r "$curios_dotfiles_path"/.pi/agent/ "$INSTALL_DIR"/.pi/
+cp -r "$curios_dotfiles_path"/.zsh/completions/ "$INSTALL_DIR"/.zsh/
 
 chmod -R u+w "$INSTALL_DIR"/.config/
 chmod -R u+w "$INSTALL_DIR"/.agents/
 chmod -R u+w "$INSTALL_DIR"/.pi/
+chmod -R u+w "$INSTALL_DIR"/.zsh/
 
 # Remove old agents skill
 rm -rf "$INSTALL_DIR"/.agents/skills/browser-tools

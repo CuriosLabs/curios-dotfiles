@@ -158,6 +158,9 @@ prompt mytheme
 
 # Use modern completion system
 # Binded to Tab
+if [ -d "$HOME/.zsh/completions" ]; then
+  fpath=("$HOME/.zsh/completions" $fpath)
+fi
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
