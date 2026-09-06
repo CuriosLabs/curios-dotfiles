@@ -62,4 +62,11 @@
         key: "o",
         description: Some("Ollama OpenWebUI (local AI)"),
     ): Spawn("brave --new-window --app=\'http://localhost:8080/\'"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "v",
+        description: Some("Voxtype STT toggle recording"),
+    ): Spawn("voxtype record toggle"),
 }
