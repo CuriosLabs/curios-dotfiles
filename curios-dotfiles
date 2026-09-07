@@ -281,6 +281,7 @@ chmod -R u+w "$INSTALL_DIR"/.zsh/
 
 # Remove old agents skill
 rm -rf "$INSTALL_DIR"/.agents/skills/browser-tools
+rm -rf "$INSTALL_DIR"/.agents/skills/curios-update
 rm -rf "$INSTALL_DIR"/.agents/skills/learn
 
 #------------- Update COSMIC keyboard layout
