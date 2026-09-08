@@ -9,7 +9,7 @@ description:
   the `curios-dotfiles` tool.
 metadata:
   author: CuriosLabs
-  version: "1.2.0"
+  version: "1.4.0"
 ---
 
 # Curios System Manager Skill
@@ -26,7 +26,9 @@ utility.
 ## Quick reference
 
 > **Note**: Most modifying commands (update, upgrade, add-pkg, update-module)
-> require `sudo`.
+> require `sudo`. Commands starting with `sudo` should be prefixed with
+> `xdg-terminal-exec` so a new terminal opens and the user can type their
+> password (AI agents usually do not have sudo rights).
 
 | Task | Command |
 |------|---------|
@@ -164,6 +166,37 @@ Up-to-date online [documentation is here](https://github.com/CuriosLabs/CuriOS/b
 - When a user wants to change their overall system theme (colors for Alacritty,
   Neovim, Zed, etc.).
 - When a user needs to set their COSMIC keyboard layout during dotfiles installation.
+
+## Advanced usage
+
+**NEVER** edit files under `/etc/nixos/` except `/etc/nixos/settings.nix`.
+That file is the **only** NixOS configuration that is preserved across system
+upgrades. Any other file in `/etc/nixos/` will be overwritten on upgrade.
+
+`/etc/nixos/settings.nix` requires `sudo` to write. AI agents usually do **not**
+have sudo rights. Do **not** run `sudo` yourself. Prepare the new file in `/tmp`,
+then launch the copy and the system update in **one** terminal via
+`xdg-terminal-exec`. That opens a new window where the user can type their sudo
+password:
+
+```bash
+# 1. Agent: write the new settings to a temp file
+# 2. Agent: open a terminal so the user can authenticate, then apply
+xdg-terminal-exec bash -c 'sudo cp /tmp/settings.nix /etc/nixos/settings.nix && sudo curios-update --update'
+```
+
+## NixOS useful commands
+
+```bash
+# List system generations
+nixos-rebuild list-generations
+# Garbage-collect the Nix store (keep generations newer than 3 days)
+xdg-terminal-exec sudo nix-collect-garbage --delete-older-than 3d
+# Try a package without installing it
+nix-shell -p <pkg>
+# List user profile packages
+nix profile list
+```
 
 ## Important Notes
 
