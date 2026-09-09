@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.36.0"
+readonly SCRIPT_VERSION="0.36.1"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SELECTED_THEME="One-Dark"
@@ -131,7 +131,7 @@ apply_theme() {
   # 4. Herdr
   if [ -n "$herdr_theme" ] && [ -f "$install_dir/.config/herdr/config.toml" ]; then
     sed -i "s/^name = \".*\"/name = \"$herdr_theme\"/" "$install_dir/.config/herdr/config.toml"
-    if command -v herdr >/dev/null 2>&1; then
+    if command -v herdr >/dev/null 2>&1 && [ -S "$install_dir/.config/herdr/herdr.sock" ]; then
       herdr server reload-config
     fi
   fi
