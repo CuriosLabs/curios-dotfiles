@@ -8,7 +8,7 @@
       "cat *": "allow",
       "fd *": "allow",
       "find *": "allow",
-      "git *": "allow",
+      "git *": "ask",
       "git commit *": "ask",
       "git push *": "deny",
       "grep *": "allow",
