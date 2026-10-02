@@ -52,15 +52,13 @@ When asked to change a setting for a specific application:
 
 ### 2. Adding a New Theme
 
-To add a new theme (e.g., "MyNewTheme"):
+Themes are not listed in this repository. `apply_theme` and `--list` read
+`$HOME/.curios/themes/themes.json` (`THEME_CONFIG_FILE`).
 
-1. Create `themes/MyNewTheme.ron`.
-2. Add any application-specific theme files (e.g.,
-   `.config/alacritty/MyNewTheme.toml`).
-3. Update the `THEMES_LIST` and `apply_theme` function in the `curios-dotfiles`
-   script.
-4. Ensure appropriate mappings for Neovim colorschemes and Zed themes are added
-   to the `case` statement in `apply_theme`.
+Add an entry under `.themes`. Each entry provides `alacritty_theme`,
+`ghostty_theme`, `zed`, `color`, `herdr`, `nvim`, `tui`, `cosmic_theme`, and
+`wallpapers`.
+`curios-dotfiles --list` prints the theme names.
 
 ### 3. Testing Changes
 

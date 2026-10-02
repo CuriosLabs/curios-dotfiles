@@ -7,119 +7,150 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.36.2"
+readonly SCRIPT_VERSION="0.40.0"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
-SELECTED_THEME="One-Dark"
-readonly THEMES_LIST=("Catppuccin-Macchiato" "Everforest-Medium" "Gruvbox-Dark" "Hackers-Green" "Kanagawa" "Nord-Dark" "Nord-Light" "One-Dark" "Tokyonight")
+SELECTED_THEME="One Dark"
 SCRIPT_PATH="$(dirname "$0")"
+readonly THEME_CONFIG_FILE="$HOME/.curios/themes/themes.json"
+UPDATE_THEME=0
+LIST_THEMES=0
+#------------- Colors -------------#
+readonly RED="\033[31;1m"      # Red and bold
+readonly GREEN="\033[32;1m"    # Green and bold
+readonly GREY="\033[37;1m"     # Grey and bold
+readonly YELLOW="\033[33;1;3m" # Yellow, bold and italic
+readonly NC="\033[0m"          # No Color
 
 #------------- Print help function
 usage() {
   echo -e "
-Usage: curios-dotfiles [options] <directory>
+${GREY}USAGE:${NC}
+  curios-dotfiles [options] <directory>
+
   Where,
-    directory: Valid directory to copy the dotfiles into, like '/home/<user>' or '/etc/skel'."
+    directory: Valid directory to copy the dotfiles into, like '$HOME' or '/etc/skel'.
 
-  cat <<EOF
-
-  Options:
+${GREY}OPTIONS:${NC}
      -h, --help         Print this message.
      --lang LANG        Preset COSMIC keyboard layout, 'us' by default.
-     --themes THEME     Preset theme, 'One-Dark' by default. Available: ${THEMES_LIST[*]}.
+     --list             List themes from the theme config and exit.
+     --themes THEME     Apply a theme from the theme config, 'One Dark' for example.
      -v, --verbose      Print more information.
      --version          Print version number and exit.
 
-  Examples:
+  Themes are read from ${THEME_CONFIG_FILE}.
+
+${GREY}EXAMPLES:${NC}
+    List available themes:
+      curios-dotfiles --list
     Install dotfiles into home directory of user 'nixos' with French keyboard:
-      curios-dotfiles --lang fr --themes One-Dark /home/nixos/
+      curios-dotfiles --lang fr --themes \"One Dark\" /home/nixos/
     Install as a skeleton for future user home directory:
-      curios-dotfiles /etc/skel/
-EOF
+      sudo curios-dotfiles /etc/skel/
+"
   exit
+}
+
+#------------- Expand a leading ~/ against a root directory
+expand_tilde() {
+  local path="$1"
+  local root="${2%/}"
+  local tilde
+  tilde=$(printf '~')
+  if [ "${path#"$tilde"/}" != "$path" ]; then
+    printf '%s/%s\n' "$root" "${path#"$tilde"/}"
+  elif [ "$path" = "$tilde" ]; then
+    printf '%s\n' "$root"
+  else
+    printf '%s\n' "$path"
+  fi
+}
+
+#------------- Require theme config
+require_theme_config() {
+  if ! command -v jq >/dev/null 2>&1; then
+    echo -e "${RED}jq is required to read ${THEME_CONFIG_FILE}${NC}" >&2
+    exit 1
+  fi
+  if [ ! -f "$THEME_CONFIG_FILE" ]; then
+    echo -e "${RED}Theme file not found: ${THEME_CONFIG_FILE}${NC}" >&2
+    exit 1
+  fi
+}
+
+#------------- List themes from THEME_CONFIG_FILE
+list_themes() {
+  require_theme_config
+  if ! jq -e '.themes | type == "object"' "$THEME_CONFIG_FILE" >/dev/null; then
+    echo -e "${RED}No themes found in ${THEME_CONFIG_FILE}${NC}" >&2
+    exit 1
+  fi
+  jq -r '.themes | keys_unsorted[]' "$THEME_CONFIG_FILE"
 }
 
 #------------- Apply theme function
 apply_theme() {
   local theme_name="$1"
   local install_dir="$2"
+  local alacritty_theme=""
+  local ghostty_theme=""
+  local zed_theme=""
   local color_theme=""
   local herdr_theme=""
   local nvim_theme=""
   local tui_theme=""
+  local cosmic_theme=""
+  local wallpapers=""
+  local theme_data=""
+  local wallpaper_file="$install_dir/.config/cosmic/com.system76.CosmicSettings.Wallpaper/v1/current-folder"
+  local background_file="$install_dir/.config/cosmic/com.system76.CosmicBackground/v1/all"
   local bravethemespolicyfile="/etc/brave/policies/managed/themes.json"
+
+  require_theme_config
+
+  if ! jq -e --arg name "$theme_name" '.themes | has($name)' "$THEME_CONFIG_FILE" >/dev/null; then
+    echo -e "${RED}Unknown theme: ${theme_name}${NC}" >&2
+    echo -e "${YELLOW}Use --list to see available themes.${NC}" >&2
+    exit 1
+  fi
+
+  theme_data=$(jq -r --arg name "$theme_name" '
+    .themes[$name]
+    | [
+        (.alacritty_theme // ""),
+        (.ghostty_theme // ""),
+        (.zed // ""),
+        (.color // ""),
+        (.herdr // ""),
+        (.nvim // ""),
+        (.tui // ""),
+        (.cosmic_theme // ""),
+        (.wallpapers // "")
+      ]
+    | @tsv
+  ' "$THEME_CONFIG_FILE")
+  IFS=$'\t' read -r alacritty_theme ghostty_theme zed_theme color_theme herdr_theme nvim_theme tui_theme cosmic_theme wallpapers <<<"$theme_data"
+
+  alacritty_theme=$(expand_tilde "$alacritty_theme" "$install_dir")
+  ghostty_theme=$(expand_tilde "$ghostty_theme" "$install_dir")
+  cosmic_theme=$(expand_tilde "$cosmic_theme" "$HOME")
+  wallpapers=$(expand_tilde "$wallpapers" "$install_dir")
 
   printf "\e[32m Applying theme: %s...\e[0m\n" "$theme_name"
 
-  case "$theme_name" in
-  Catppuccin-Macchiato)
-    color_theme="#24273a"
-    herdr_theme="catppuccin"
-    nvim_theme="catppuccin-macchiato"
-    tui_theme="catppuccin-macchiato"
-    ;;
-  Everforest-Medium)
-    color_theme="#2d353b"
-    herdr_theme="kanagawa-lotus"
-    nvim_theme="everforest"
-    tui_theme="everforest"
-    ;;
-  Gruvbox-Dark)
-    color_theme="#282828"
-    herdr_theme="gruvbox"
-    nvim_theme="gruvbox"
-    tui_theme="gruvbox"
-    ;;
-  Hackers-Green)
-    color_theme="#000000"
-    herdr_theme="terminal"
-    nvim_theme="melange"
-    tui_theme="matrix"
-    ;;
-  Kanagawa)
-    color_theme="#1f1f28"
-    herdr_theme="kanagawa"
-    nvim_theme="kanagawa"
-    tui_theme="kanagawa"
-    ;;
-  Nord-Dark)
-    color_theme="#2e3440"
-    herdr_theme="nord"
-    nvim_theme="nord"
-    tui_theme="nord"
-    ;;
-  Nord-Light)
-    color_theme="#eceff4"
-    herdr_theme="one-light"
-    nvim_theme="nord"
-    tui_theme="nord"
-    ;;
-  One-Dark)
-    color_theme="#20252c"
-    herdr_theme="one-dark"
-    nvim_theme="onedark"
-    tui_theme="one-dark"
-    ;;
-  Tokyonight)
-    color_theme="#1a1b26"
-    herdr_theme="tokyo-night"
-    nvim_theme="tokyonight"
-    tui_theme="tokyonight"
-    ;;
-  esac
-
   # 1. Alacritty
-  if [ -f "$install_dir/.config/alacritty/$theme_name.toml" ]; then
-    cp "$install_dir/.config/alacritty/$theme_name.toml" "$install_dir/.config/alacritty/alacritty.toml"
+  if [ -n "$alacritty_theme" ] && [ -f "$alacritty_theme" ]; then
+    cp "$alacritty_theme" "$install_dir/.config/alacritty/alacritty.toml"
   fi
 
   # 1-bis. Ghostty
-  if [ -f "$install_dir/.config/ghostty/$theme_name.config" ]; then
-    cp "$install_dir/.config/ghostty/$theme_name.config" "$install_dir/.config/ghostty/theme.config"
+  if [ -n "$ghostty_theme" ] && [ -f "$ghostty_theme" ]; then
+    cp "$ghostty_theme" "$install_dir/.config/ghostty/theme.config"
   fi
 
   # 2. opencode tui.json
-  if [ -f "$install_dir/.config/opencode/tui.json" ]; then
+  if [ -n "$tui_theme" ] && [ -f "$install_dir/.config/opencode/tui.json" ]; then
     sed -i "s/\"theme\": \".*\"/\"theme\": \"$tui_theme\"/" "$install_dir/.config/opencode/tui.json"
   fi
 
@@ -137,32 +168,43 @@ apply_theme() {
   fi
 
   # 5. Zed
-  if [ -f "$install_dir/.config/zed/settings.json" ]; then
-    if [ "$theme_name" == "Nord-Light" ]; then
+  if [ -n "$zed_theme" ] && [ -f "$install_dir/.config/zed/settings.json" ]; then
+    if [[ "$zed_theme" == *[Ll]ight* ]]; then
       sed -i "s/\"mode\": \".*\"/\"mode\": \"light\"/" "$install_dir/.config/zed/settings.json"
-      sed -i "s/\"light\": \".*\"/\"light\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
+      sed -i "s/\"light\": \".*\"/\"light\": \"$zed_theme\"/" "$install_dir/.config/zed/settings.json"
     else
       sed -i "s/\"mode\": \".*\"/\"mode\": \"dark\"/" "$install_dir/.config/zed/settings.json"
-      sed -i "s/\"dark\": \".*\"/\"dark\": \"$theme_name\"/" "$install_dir/.config/zed/settings.json"
+      sed -i "s/\"dark\": \".*\"/\"dark\": \"$zed_theme\"/" "$install_dir/.config/zed/settings.json"
     fi
   fi
 
   # 6. Brave Browser (Manual Reference)
-  if [ ! -f "$bravethemespolicyfile" ]; then
-    sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
-    sudo touch "$bravethemespolicyfile"
-    sudo chown 1000:100 "$bravethemespolicyfile"
+  if [ -n "$color_theme" ]; then
+    if [ ! -f "$bravethemespolicyfile" ]; then
+      sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
+      sudo touch "$bravethemespolicyfile"
+      sudo chown 1000:100 "$bravethemespolicyfile"
+    fi
+    jq -n --arg color "$color_theme" '{ "BrowserThemeColor": $color }' >"$bravethemespolicyfile"
   fi
-  jq -n '{ "BrowserThemeColor": "'$color_theme'" }' >"$bravethemespolicyfile"
 
   # 7. COSMIC desktop
-  if command -v cosmic-settings >/dev/null 2>&1; then
-    cosmic-settings appearance import "/run/current-system/sw/share/themes/curios/$theme_name.ron"
+  if [ -n "$cosmic_theme" ] && command -v cosmic-settings >/dev/null 2>&1; then
+    cosmic-settings appearance import "$cosmic_theme"
+  fi
+
+  # 8. COSMIC wallpapers
+  if [ -n "$wallpapers" ]; then
+    mkdir -p "$(dirname "$wallpaper_file")"
+    printf 'Some("%s")\n' "$wallpapers" >"$wallpaper_file"
+    if [ -f "$background_file" ]; then
+      sed -i "s|source: Path(\".*\")|source: Path(\"$wallpapers\")|" "$background_file"
+    fi
   fi
 }
 
 #------------- Scripts arguments parse options
-ARGS=$(getopt --longoptions="verbose,version,help,lang:,themes:" --name "$0" --options ":hv" -- "$@")
+ARGS=$(getopt --longoptions="verbose,version,help,lang:,list,themes:" --name "$0" --options ":hv" -- "$@")
 if [ $# -lt 1 ]; then
   usage
 fi
@@ -184,21 +226,13 @@ while true; do
     LOCALE_KEYBOARD="$2"
     shift 2
     ;;
+  --list)
+    LIST_THEMES=1
+    shift
+    ;;
   --themes)
+    UPDATE_THEME=1
     SELECTED_THEME="$2"
-    # Validate theme
-    valid_theme=0
-    for t in "${THEMES_LIST[@]}"; do
-      if [ "$t" == "$SELECTED_THEME" ]; then
-        valid_theme=1
-        break
-      fi
-    done
-    if [ $valid_theme -eq 0 ]; then
-      printf "\e[31mInvalid theme: %s\e[0m\n" "$SELECTED_THEME"
-      echo "Available themes: ${THEMES_LIST[*]}"
-      exit 2
-    fi
     shift 2
     ;;
   --version)
@@ -215,13 +249,16 @@ while true; do
   esac
 done
 
+if [ "$LIST_THEMES" -eq 1 ]; then
+  list_themes
+  exit 0
+fi
+
 #------------- Check <directory>
 if [ ! -d "$INSTALL_DIR" ]; then
   printf "\e[31mDirectory argument is invalid!\e[0m\n"
   exit 2
 fi
-
-printf "\e[32m Installing CuriosLabs dotfiles...\e[0m\n"
 
 #------------- Check curios-dotfiles files
 curios_dotfiles_path=$(nix-store --query --outputs "$(which curios-dotfiles)")
@@ -241,55 +278,12 @@ if [ ! -d "$curios_dotfiles_path" ]; then
   exit 1
 fi
 
-#------------- Copying dotfiles into INSTALL_DIR
-install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.npmrc
-install -D -m 644 -t "$INSTALL_DIR" "$curios_dotfiles_path"/.zshrc
-
-mkdir -p "$INSTALL_DIR"/.config/alacritty/
-mkdir -p "$INSTALL_DIR"/.config/btop/
-mkdir -p "$INSTALL_DIR"/.config/cosmic/
-mkdir -p "$INSTALL_DIR"/.config/ghostty/
-mkdir -p "$INSTALL_DIR"/.config/herdr/
-mkdir -p "$INSTALL_DIR"/.config/keepassxc/
-mkdir -p "$INSTALL_DIR"/.config/nvim/
-mkdir -p "$INSTALL_DIR"/.config/opencode/plugins/
-mkdir -p "$INSTALL_DIR"/.config/tmux/
-mkdir -p "$INSTALL_DIR"/.config/zed/themes/
-mkdir -p "$INSTALL_DIR"/.agents/skills/
-mkdir -p "$INSTALL_DIR"/.npm-packages/
-mkdir -p "$INSTALL_DIR"/.pi/agent/extensions/
-mkdir -p "$INSTALL_DIR"/.zsh/completions/
-
-cp -r "$curios_dotfiles_path"/.config/alacritty/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/btop/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/cosmic/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/ghostty/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/herdr/ "$INSTALL_DIR"/.config/
-cp --update=none "$curios_dotfiles_path"/.config/keepassxc/keepassxc.ini "$INSTALL_DIR"/.config/keepassxc/keepassxc.ini
-cp -r "$curios_dotfiles_path"/.config/nvim/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.config/opencode/ "$INSTALL_DIR"/.config/
-cp "$curios_dotfiles_path"/.config/tmux/tmux.conf "$INSTALL_DIR"/.config/tmux/tmux.conf
-cp -ru "$curios_dotfiles_path"/.config/zed/ "$INSTALL_DIR"/.config/
-cp -r "$curios_dotfiles_path"/.agents/skills/ "$INSTALL_DIR"/.agents/
-cp -r "$curios_dotfiles_path"/.pi/agent/ "$INSTALL_DIR"/.pi/
-cp -r "$curios_dotfiles_path"/.zsh/completions/ "$INSTALL_DIR"/.zsh/
-
-chmod -R u+w "$INSTALL_DIR"/.config/
-chmod -R u+w "$INSTALL_DIR"/.agents/
-chmod -R u+w "$INSTALL_DIR"/.pi/
-chmod -R u+w "$INSTALL_DIR"/.zsh/
-
-# Remove old agents skill
-rm -rf "$INSTALL_DIR"/.agents/skills/browser-tools
-rm -rf "$INSTALL_DIR"/.agents/skills/curios-update
-rm -rf "$INSTALL_DIR"/.agents/skills/learn
-
 #------------- Update COSMIC keyboard layout
-sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
+#sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
 
 #------------- Apply selected theme
-if [ -n "$SELECTED_THEME" ]; then
+if [ "$UPDATE_THEME" -eq 1 ]; then
   apply_theme "$SELECTED_THEME" "$INSTALL_DIR"
 fi
 
-printf "\e[32mDotfiles installation done.\e[0m\n"
+echo -e "${GREEN}Done.${NC}"
