@@ -1,7 +1,7 @@
 # Curi*OS* dotfiles manager
 
-This is [Curi*OS*](https://github.com/CuriosLabs/CuriOS) package to manage dotfiles
-and setup themes for a [COSMIC desktop environment](https://system76.com/cosmic/).
+This is the [Curi*OS*](https://github.com/CuriosLabs/CuriOS) package to manage dotfiles
+and set up themes for the [COSMIC desktop environment](https://system76.com/cosmic/).
 
 ## Installation
 
@@ -9,35 +9,41 @@ It comes pre-installed with [CuriOS](https://github.com/CuriosLabs/CuriOS).
 
 ## Features
 
-- Retrieve user dotfiles from Git repository like [Curi*OS* themes](https://github.com/CuriosLabs/curios-themes).
-- Manage themes for COSMIC Desktop environment and various tools like Alacritty,
-  Ghostty, Herdr, OpenCode, NeoVim, Brave browser...
-- Change language setup on COSMIC.
+- Retrieve user dotfiles from a Git repository, such as [Curi*OS* themes](https://github.com/CuriosLabs/curios-themes).
+- Manage themes for the COSMIC desktop environment and tools such as Alacritty,
+  Ghostty, Herdr, OpenCode, Neovim, and Brave.
+- Change the language setup on COSMIC.
 
 ## Usage
 
 - Read the manual:
 
-```bash
+  ```bash
   curios-dotfiles --help
   ```
 
-- List all themes available:
+- List all available themes:
 
   ```bash
   curios-dotfiles --list
   ```
 
-- Install "One Dark" theme:
+- Install the "One Dark" theme:
 
   ```bash
-  curios-dotfiles --themes "One Dark" $HOME
+  curios-dotfiles --themes "One Dark" "$HOME"
+  ```
+
+- Set COSMIC for a French keyboard and Tokyo Night theme:
+
+  ```bash
+  curios-dotfiles --lang fr --themes "Tokyo Night" "$HOME"
   ```
 
 ## Build, Test, and Development Commands
 
 This project uses [Just](https://github.com/casey/just) to manage development commands.
-Use the appropriate shell environment before with `nix-shell shell.nix`.
+Enter the development shell first with `nix-shell shell.nix`.
 
 - **Lint Files**: Check code quality for Nix and Bash files:
 
@@ -51,14 +57,14 @@ Use the appropriate shell environment before with `nix-shell shell.nix`.
   nix-shell shell.nix --run "just test"
   ```
 
-- **Publish a new version**: Create a new git tag, push it, build it and update
-the hash signature for the Nix package:
+- **Publish a new version**: Create a new Git tag, push it, build it, and update
+  the hash signature for the Nix package:
 
   ```bash
   nix-shell shell.nix --run "just publish 0.1.2"
   ```
 
-- **Run**: Build the Nix package (from Github) and run it:
+- **Run**: Build the Nix package (from GitHub) and run it:
 
   ```bash
   nix-shell shell.nix --run "just run"
