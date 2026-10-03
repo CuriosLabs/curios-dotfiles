@@ -260,22 +260,12 @@ if [ ! -d "$INSTALL_DIR" ]; then
   exit 2
 fi
 
-#------------- Check curios-dotfiles files
-curios_dotfiles_path=$(nix-store --query --outputs "$(which curios-dotfiles)")
-curios_dotfiles_path=$(realpath "$curios_dotfiles_path"/share)
-
 if [ $VERBOSE -eq 1 ]; then
   echo "path: $SCRIPT_PATH"
-  echo "curios_dotfiles_path: $curios_dotfiles_path"
   echo "<directory>: $INSTALL_DIR"
   echo "--lang: $LOCALE_KEYBOARD"
   echo "--themes: $SELECTED_THEME"
   echo "--verbose: $VERBOSE"
-fi
-
-if [ ! -d "$curios_dotfiles_path" ]; then
-  printf "\e[31m curios-dotfiles package not found!\e[0m\n"
-  exit 1
 fi
 
 #------------- Update COSMIC keyboard layout
