@@ -19,7 +19,6 @@ clean:
 hash-update VERSION:
   #!/usr/bin/env bash
   set -euxo pipefail
-  sed "s/version = \".*/version = \"{{VERSION}}\";/g" -i ./pkgs/curios-dotfiles/default.nix
   HASH=`nix --extra-experimental-features nix-command hash convert --hash-algo sha256 "$(nix-prefetch-url --unpack https://github.com/{{owner}}/{{name}}/archive/{{VERSION}}.tar.gz)"`
   sed "s#hash = \".*#hash = \"${HASH}\";#g" -i ./pkgs/curios-dotfiles/default.nix
   git commit -a -m "Updated hash signature"

@@ -32,22 +32,22 @@ ${GREY}USAGE:${NC}
     directory: Valid directory to copy the dotfiles into, like '$HOME' or '/etc/skel'.
 
 ${GREY}OPTIONS:${NC}
-     -h, --help         Print this message.
-     --lang LANG        Preset COSMIC keyboard layout, 'us' by default.
-     --list             List themes from the theme config and exit.
-     --themes THEME     Apply a theme from the theme config, 'One Dark' for example.
-     -v, --verbose      Print more information.
-     --version          Print version number and exit.
+  ${GREY}-h, --help${NC}         Print this message.
+  ${GREY}--lang LANG${NC}        Preset COSMIC keyboard layout, 'us' by default.
+  ${GREY}--list${NC}             List themes from the theme config and exit.
+  ${GREY}--themes THEME${NC}     Apply a theme from the theme config, 'One Dark' for example.
+  ${GREY}-v, --verbose${NC}      Print more information.
+  ${GREY}--version${NC}          Print version number and exit.
 
   Themes are read from ${THEME_CONFIG_FILE}.
 
 ${GREY}EXAMPLES:${NC}
     List available themes:
-      curios-dotfiles --list
+      ${GREY}curios-dotfiles --list${NC}
     Install dotfiles into home directory of user 'nixos' with French keyboard:
-      curios-dotfiles --lang fr --themes \"One Dark\" /home/nixos/
+      ${GREY}curios-dotfiles --themes \"One Dark\" $HOME ${NC}
     Install as a skeleton for future user home directory:
-      sudo curios-dotfiles /etc/skel/
+      ${GREY}sudo curios-dotfiles /etc/skel/${NC}
 "
   exit
 }
