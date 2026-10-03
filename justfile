@@ -19,7 +19,6 @@ clean:
 hash-update VERSION:
   #!/usr/bin/env bash
   set -euxo pipefail
-  sed "s/version = \".*/version = \"{{VERSION}}\";/g" -i ./pkgs/curios-dotfiles/default.nix
   HASH=`nix --extra-experimental-features nix-command hash convert --hash-algo sha256 "$(nix-prefetch-url --unpack https://github.com/{{owner}}/{{name}}/archive/{{VERSION}}.tar.gz)"`
   sed "s#hash = \".*#hash = \"${HASH}\";#g" -i ./pkgs/curios-dotfiles/default.nix
   git commit -a -m "Updated hash signature"
@@ -31,21 +30,18 @@ lint:
   for file in `fd --type f ".nix" .`; do statix check $file; done
   @echo 'Linting Bash files...'
   shellcheck --color=always -f tty -x ./curios-dotfiles && echo 'Shellcheck: SUCCESS'
-  @echo 'Linting TypeScript files...'
-  NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/brave-tools/scripts/eslint.config.mjs ./.agents/skills/brave-tools/scripts/*.ts && echo 'brave-tools: SUCCESS'
-  NODE_PATH=$(npm root -g) eslint -c ./.agents/skills/email/scripts/eslint.config.mjs ./.agents/skills/email/scripts/*.ts && echo 'Email-Skill: SUCCESS'
-  NODE_PATH=$(npm root -g) eslint -c ./.pi/agent/extensions/eslint.config.mjs ./.pi/agent/extensions/*.ts && echo 'Pi Extensions: SUCCESS'
-  NODE_PATH=$(npm root -g) eslint -c ./.pi/agent/extensions/eslint.config.mjs ./.config/opencode/plugins/*.ts && echo 'Opencode Plugins: SUCCESS'
 
-# Complete publish process: lint, tag then build and update hash signature, finally push on github.
+# Complete publish process: lint, tag, update hash signature, finally push and create a PR on github.
 publish VERSION:
   @if git rev-parse "{{VERSION}}" >/dev/null 2>&1; then echo "Warning: Tag {{VERSION}} already exists."; exit 1; fi
   git checkout testing
+  gh auth status
   @just clean
   @just lint
   @just tag {{VERSION}}
   sleep 5
   @just hash-update {{VERSION}}
+  gh pr create --title "Release {{VERSION}}" --body "" --base main --assignee "@me"
 
 # Build the Nix package and run it.
 run:
@@ -59,7 +55,6 @@ tag VERSION:
   sed "s#hash = \".*#hash = \"\";#g" -i ./pkgs/curios-dotfiles/default.nix
   sed "s/readonly SCRIPT_VERSION=\".*/readonly SCRIPT_VERSION=\"{{VERSION}}\"/g" -i ./curios-dotfiles
   git commit -a -m "Release {{VERSION}}"
-  git pull
   @echo "Tagging version: {{VERSION}}"
   git tag -a {{VERSION}} -m "Release {{VERSION}}"
   git push origin {{VERSION}}
@@ -70,5 +65,6 @@ removetag VERSION:
   git push --delete origin {{VERSION}}
 
 # Launch curios-dotfiles bash script directly (not the Nix pkgs).
+[positional-arguments]
 test *FLAGS:
-  ./curios-dotfiles {{FLAGS}}
+  ./curios-dotfiles "$@"
