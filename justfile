@@ -31,15 +31,17 @@ lint:
   @echo 'Linting Bash files...'
   shellcheck --color=always -f tty -x ./curios-dotfiles && echo 'Shellcheck: SUCCESS'
 
-# Complete publish process: lint, tag then build and update hash signature, finally push on github.
+# Complete publish process: lint, tag, update hash signature, finally push and create a PR on github.
 publish VERSION:
   @if git rev-parse "{{VERSION}}" >/dev/null 2>&1; then echo "Warning: Tag {{VERSION}} already exists."; exit 1; fi
   git checkout testing
+  gh auth status
   @just clean
   @just lint
   @just tag {{VERSION}}
   sleep 5
   @just hash-update {{VERSION}}
+  gh pr create --title "Release {{VERSION}}" --body "" --base main --assignee "@me"
 
 # Build the Nix package and run it.
 run:
@@ -53,7 +55,6 @@ tag VERSION:
   sed "s#hash = \".*#hash = \"\";#g" -i ./pkgs/curios-dotfiles/default.nix
   sed "s/readonly SCRIPT_VERSION=\".*/readonly SCRIPT_VERSION=\"{{VERSION}}\"/g" -i ./curios-dotfiles
   git commit -a -m "Release {{VERSION}}"
-  git pull
   @echo "Tagging version: {{VERSION}}"
   git tag -a {{VERSION}} -m "Release {{VERSION}}"
   git push origin {{VERSION}}
