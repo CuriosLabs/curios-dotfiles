@@ -10,7 +10,7 @@ stdenvNoCC.mkDerivation rec {
     owner = "CuriosLabs";
     repo = "curios-dotfiles";
     rev = version;
-    hash = "";
+    hash = "sha256-gfR5Rino+c7XCn2Lx/rdi3mLvEbEPVCd/mBTkPIhMW8=";
   };
 
   buildInputs = [ pkgs.git pkgs.gnused pkgs.jq ];
