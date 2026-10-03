@@ -14,6 +14,7 @@ build:
 # Cleaning nix pkgs build result folder.
 clean:
   rm -rf ./result
+  nix-store --gc
 
 # Update the Nix package hash signature, commit and push to git.
 hash-update VERSION:
