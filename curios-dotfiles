@@ -97,9 +97,7 @@ apply_theme() {
   local ghostty_theme=""
   local zed_theme=""
   local color_theme=""
-  local herdr_theme=""
   local nvim_theme=""
-  local tui_theme=""
   local cosmic_theme=""
   local wallpapers=""
   local theme_data=""
@@ -122,15 +120,13 @@ apply_theme() {
         (.ghostty_theme // ""),
         (.zed // ""),
         (.color // ""),
-        (.herdr // ""),
         (.nvim // ""),
-        (.tui // ""),
         (.cosmic_theme // ""),
         (.wallpapers // "")
       ]
     | @tsv
   ' "$THEME_CONFIG_FILE")
-  IFS=$'\t' read -r alacritty_theme ghostty_theme zed_theme color_theme herdr_theme nvim_theme tui_theme cosmic_theme wallpapers <<<"$theme_data"
+  IFS=$'\t' read -r alacritty_theme ghostty_theme zed_theme color_theme nvim_theme cosmic_theme wallpapers <<<"$theme_data"
 
   alacritty_theme=$(expand_tilde "$alacritty_theme" "$install_dir")
   ghostty_theme=$(expand_tilde "$ghostty_theme" "$install_dir")
@@ -144,14 +140,9 @@ apply_theme() {
     cp "$alacritty_theme" "$install_dir/.config/alacritty/alacritty.toml"
   fi
 
-  # 1-bis. Ghostty
+  # 2. Ghostty
   if [ -n "$ghostty_theme" ] && [ -f "$ghostty_theme" ]; then
     cp "$ghostty_theme" "$install_dir/.config/ghostty/theme.config"
-  fi
-
-  # 2. opencode tui.json
-  if [ -n "$tui_theme" ] && [ -f "$install_dir/.config/opencode/tui.json" ]; then
-    sed -i "s/\"theme\": \".*\"/\"theme\": \"$tui_theme\"/" "$install_dir/.config/opencode/tui.json"
   fi
 
   # 3. Neovim
@@ -159,15 +150,7 @@ apply_theme() {
     sed -i "s/colorscheme = \".*\"/colorscheme = \"$nvim_theme\"/" "$install_dir/.config/nvim/lua/plugins/colorschemes.lua"
   fi
 
-  # 4. Herdr
-  if [ -n "$herdr_theme" ] && [ -f "$install_dir/.config/herdr/config.toml" ]; then
-    sed -i "s/^name = \".*\"/name = \"$herdr_theme\"/" "$install_dir/.config/herdr/config.toml"
-    if command -v herdr >/dev/null 2>&1 && [ -S "$install_dir/.config/herdr/herdr.sock" ]; then
-      herdr server reload-config
-    fi
-  fi
-
-  # 5. Zed
+  # 4. Zed
   if [ -n "$zed_theme" ] && [ -f "$install_dir/.config/zed/settings.json" ]; then
     if [[ "$zed_theme" == *[Ll]ight* ]]; then
       sed -i "s/\"mode\": \".*\"/\"mode\": \"light\"/" "$install_dir/.config/zed/settings.json"
@@ -178,7 +161,7 @@ apply_theme() {
     fi
   fi
 
-  # 6. Brave Browser (Manual Reference)
+  # 5. Brave Browser (Manual Reference)
   if [ -n "$color_theme" ]; then
     if [ ! -f "$bravethemespolicyfile" ]; then
       sudo mkdir -p "$(dirname "$bravethemespolicyfile")"
@@ -188,12 +171,12 @@ apply_theme() {
     jq -n --arg color "$color_theme" '{ "BrowserThemeColor": $color }' >"$bravethemespolicyfile"
   fi
 
-  # 7. COSMIC desktop
+  # 6. COSMIC desktop
   if [ -n "$cosmic_theme" ] && command -v cosmic-settings >/dev/null 2>&1; then
     cosmic-settings appearance import "$cosmic_theme"
   fi
 
-  # 8. COSMIC wallpapers
+  # 7. COSMIC wallpapers
   if [ -n "$wallpapers" ]; then
     mkdir -p "$(dirname "$wallpaper_file")"
     printf 'Some("%s")\n' "$wallpapers" >"$wallpaper_file"

@@ -11,7 +11,7 @@ It comes pre-installed with [CuriOS](https://github.com/CuriosLabs/CuriOS).
 
 - Retrieve user dotfiles from a Git repository, such as [Curi*OS* themes](https://github.com/CuriosLabs/curios-themes).
 - Manage themes for the COSMIC desktop environment and tools such as Alacritty,
-  Ghostty, Herdr, OpenCode, Neovim, and Brave.
+  Ghostty, Neovim, and Brave.
 - Change the language setup on COSMIC.
 
 ## Usage

@@ -74,12 +74,12 @@ constants, `local` for function variables.
 Add or edit themes in `$HOME/.curios/themes/themes.json` (or the
 [curios-themes](https://github.com/CuriosLabs/curios-themes) repo), under
 `.themes`. Each entry may set `alacritty_theme`, `ghostty_theme`, `zed`,
-`color`, `herdr`, `nvim`, `tui`, `cosmic_theme`, and `wallpapers`. Paths may
+`color`, `nvim`, `cosmic_theme`, and `wallpapers`. Paths may
 start with `~/` and are expanded against the install directory (`cosmic_theme`
 is expanded against `$HOME`).
 
 `apply_theme` writes into the target directory for Alacritty, Ghostty,
-OpenCode, Neovim, Herdr, Zed, Brave (`/etc/brave/policies/managed/themes.json`),
+Neovim, Zed, Brave (`/etc/brave/policies/managed/themes.json`),
 and COSMIC (appearance import and wallpaper RON files). It does not store those
 files in this repo.
 
