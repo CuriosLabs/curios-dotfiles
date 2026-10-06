@@ -7,14 +7,18 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.41.0"
+readonly SCRIPT_VERSION="0.42.0"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
+SET_LOCALE=0
 SELECTED_THEME="One Dark"
 SCRIPT_PATH="$(dirname "$0")"
 readonly THEME_CONFIG_FILE="$HOME/.curios/themes/themes.json"
+PRINT_INFO=0
 UPDATE_THEME=0
+UPGRADE_THEME=0
 LIST_THEMES=0
+EXTRACTED_SOURCE_PATH=""
 #------------- Colors -------------#
 readonly RED="\033[31;1m"      # Red and bold
 readonly GREEN="\033[32;1m"    # Green and bold
@@ -28,25 +32,33 @@ usage() {
 ${GREY}USAGE:${NC}
   curios-dotfiles [options] <directory>
 
-  Where,
-    directory: Valid directory to copy the dotfiles into, like '$HOME' or '/etc/skel'.
+  Where:
+    directory: A valid directory to copy the dotfiles into, such as '$HOME' or '/etc/skel'.
 
 ${GREY}OPTIONS:${NC}
   ${GREY}-h, --help${NC}         Print this message.
-  ${GREY}--lang LANG${NC}        Preset COSMIC keyboard layout, 'us' by default.
+  ${GREY}--lang LANG${NC}        Set the COSMIC keyboard layout. Default: 'us'.
   ${GREY}--list${NC}             List themes from the theme config and exit.
-  ${GREY}--themes THEME${NC}     Apply a theme from the theme config, 'One Dark' for example.
+  ${GREY}--themes THEME${NC}     Apply a theme from the theme config, for example 'One Dark'.
+  ${GREY}--info${NC}             Print information about the Git repository used to source dotfiles and themes.
+  ${GREY}--upgrade${NC}          Upgrade dotfiles and themes from their Git repository.
   ${GREY}-v, --verbose${NC}      Print more information.
-  ${GREY}--version${NC}          Print version number and exit.
+  ${GREY}--version${NC}          Print the version number and exit.
 
   Themes are read from ${THEME_CONFIG_FILE}.
 
 ${GREY}EXAMPLES:${NC}
     List available themes:
       ${GREY}curios-dotfiles --list${NC}
-    Install dotfiles into home directory of user 'nixos' with French keyboard:
+    Apply the "One Dark" theme to your home directory:
       ${GREY}curios-dotfiles --themes \"One Dark\" $HOME ${NC}
-    Install as a skeleton for future user home directory:
+    Upgrade dotfiles and themes from Git and install them into your home directory:
+      ${GREY}curios-dotfiles --upgrade $HOME ${NC}
+    Print information about the dotfiles Git repository:
+      ${GREY}curios-dotfiles --info${NC}
+    Set the COSMIC keyboard layout to French:
+      ${GREY}curios-dotfiles --lang fr $HOME ${NC}
+    Install as a skeleton for future users' home directories:
       ${GREY}sudo curios-dotfiles /etc/skel/${NC}
 "
   exit
@@ -77,6 +89,60 @@ require_theme_config() {
     echo -e "${RED}Theme file not found: ${THEME_CONFIG_FILE}${NC}" >&2
     exit 1
   fi
+}
+
+#------------- Print Git repo informations
+print_info() {
+  local git_repo
+  local git_branch
+  local git_rev
+  git_repo=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.url')
+  git_branch=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.branch')
+  git_rev=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.revision')
+  echo -e "${GREEN}Git source:${NC} $git_repo ${GREEN}on branch:${NC} $git_branch ${GREEN}at revision:${NC} $git_rev"
+}
+
+#------------- Upgrade dotfiles from Git repo
+verify_commit_signature() {
+  local repo="$1"
+  if ! git -C "$repo" -c gpg.format=ssh -c gpg.ssh.allowedSignersFile="/etc/curios/allowed_signers" verify-commit HEAD; then
+    echo -e "${RED}Refusing update: Git commit signature is invalid.${NC}" >&2
+    exit 1
+  fi
+  echo -e "${GREEN}Git commit signature verified.${NC}"
+}
+
+upgrade_dotfiles() {
+  local git_repo
+  local git_branch
+  local git_rev
+  git_repo=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.url')
+  git_branch=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.branch')
+  git_rev=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.revision')
+
+  EXTRACTED_SOURCE_PATH=$(mktemp -d -t curios-dotfiles-XXXXXX)
+  trap 'rm -rf -- "$EXTRACTED_SOURCE_PATH"' EXIT
+
+  echo -e "${GREEN}Downloading Git sources...${NC}"
+  git clone --branch "${git_branch}" --single-branch --depth 1 "${git_repo}" "${EXTRACTED_SOURCE_PATH}"
+  echo "Dotfiles extracted to ${EXTRACTED_SOURCE_PATH}"
+  #verify_commit_signature "${EXTRACTED_SOURCE_PATH}"
+
+  # Checking extracted source
+  if [ ! -f "${EXTRACTED_SOURCE_PATH}"/themes/themes.json ] || [ ! -d "${EXTRACTED_SOURCE_PATH}/themes/" ] || [ ! -d "${EXTRACTED_SOURCE_PATH}/dotfiles/" ] || [ ! -d "${EXTRACTED_SOURCE_PATH}/wallpapers/" ]; then
+    echo -e "${RED}Not a valid CuriOS theme!${NC}"
+    exit 1
+  fi
+
+  # Copying dotfiles to INSTALL_DIR
+  mkdir -p "$INSTALL_DIR/.curios/themes" "$INSTALL_DIR/.curios/wallpapers"
+  cp -a "${EXTRACTED_SOURCE_PATH}/dotfiles/." "$INSTALL_DIR/"
+  cp -a "${EXTRACTED_SOURCE_PATH}/themes/." "$INSTALL_DIR/.curios/themes/"
+  while IFS= read -r -d '' wallpaper; do
+    mkdir -p "$INSTALL_DIR/.curios/wallpapers/$(dirname -- "$wallpaper")"
+    cp -a "${EXTRACTED_SOURCE_PATH}/wallpapers/${wallpaper}" "$INSTALL_DIR/.curios/wallpapers/${wallpaper}"
+  done < <(find "${EXTRACTED_SOURCE_PATH}/wallpapers" -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -printf '%P\0')
 }
 
 #------------- List themes from THEME_CONFIG_FILE
@@ -187,7 +253,7 @@ apply_theme() {
 }
 
 #------------- Scripts arguments parse options
-ARGS=$(getopt --longoptions="verbose,version,help,lang:,list,themes:" --name "$0" --options ":hv" -- "$@")
+ARGS=$(getopt --longoptions="verbose,version,help,lang:,list,themes:,info,upgrade" --name "$0" --options ":hv" -- "$@")
 if [ $# -lt 1 ]; then
   usage
 fi
@@ -206,6 +272,7 @@ while true; do
     usage
     ;;
   --lang)
+    SET_LOCALE=1
     LOCALE_KEYBOARD="$2"
     shift 2
     ;;
@@ -217,6 +284,14 @@ while true; do
     UPDATE_THEME=1
     SELECTED_THEME="$2"
     shift 2
+    ;;
+  --info)
+    PRINT_INFO=1
+    shift
+    ;;
+  --upgrade)
+    UPGRADE_THEME=1
+    shift
     ;;
   --version)
     echo "$SCRIPT_VERSION"
@@ -232,8 +307,23 @@ while true; do
   esac
 done
 
+if [ $VERBOSE -eq 1 ]; then
+  echo "path: $SCRIPT_PATH"
+  echo "<directory>: $INSTALL_DIR"
+  echo "--lang: $LOCALE_KEYBOARD"
+  echo "--themes: $SELECTED_THEME"
+  echo "--info: $PRINT_INFO"
+  echo "--upgrade: $UPGRADE_THEME"
+  echo "--verbose: $VERBOSE"
+fi
+
 if [ "$LIST_THEMES" -eq 1 ]; then
   list_themes
+  exit 0
+fi
+
+if [ "$PRINT_INFO" -eq 1 ]; then
+  print_info
   exit 0
 fi
 
@@ -243,16 +333,19 @@ if [ ! -d "$INSTALL_DIR" ]; then
   exit 2
 fi
 
-if [ $VERBOSE -eq 1 ]; then
-  echo "path: $SCRIPT_PATH"
-  echo "<directory>: $INSTALL_DIR"
-  echo "--lang: $LOCALE_KEYBOARD"
-  echo "--themes: $SELECTED_THEME"
-  echo "--verbose: $VERBOSE"
+if [ "$UPGRADE_THEME" -eq 1 ]; then
+  upgrade_dotfiles
 fi
 
 #------------- Update COSMIC keyboard layout
-#sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
+if [ "$SET_LOCALE" -eq 1 ]; then
+  cosmic_locale_file="$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
+  if [ ! -f "$cosmic_locale_file" ]; then
+    echo -e "${RED}Locale file not found!${NC}"
+    exit 1
+  fi
+  sed "s/layout: \".*/layout: \"${LOCALE_KEYBOARD}\",/g" -i "$INSTALL_DIR"/.config/cosmic/com.system76.CosmicComp/v1/xkb_config
+fi
 
 #------------- Apply selected theme
 if [ "$UPDATE_THEME" -eq 1 ]; then
