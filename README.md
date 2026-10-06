@@ -16,6 +16,13 @@ It comes pre-installed with [CuriOS](https://github.com/CuriosLabs/CuriOS).
 
 ## Usage
 
+### From the TUI
+
+1. Open `curios-manager` (Shortcut: `Super+Return`).
+2. Go to the `Themes` menu, then choose a theme from the list.
+
+### From the CLI
+
 - Read the manual:
 
   ```bash
@@ -47,6 +54,20 @@ To use your own dotfiles or themes, point CuriOS at your Git repository, then
 upgrade. A private repository must use an SSH URL, such as
 `git@github.com:user/repo.git`. `curios-dotfiles` clones with the SSH keys of
 the user who runs `--upgrade`. Do not put a token in the NixOS option.
+
+That user must be able to clone the repository before running `--upgrade`.
+For an SSH URL, add a host entry in `$HOME/.ssh/config` and register the
+matching public key on the Git host:
+
+```text
+Host github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
+```
+
+On GitHub, `gh auth login` can create or upload that key.
+See [Github auth login documentation](https://cli.github.com/manual/gh_auth_login).
 
 ```bash
 sudo curios-update --update-module curios.core.dotfiles.url "git@github.com:user/repo.git"
