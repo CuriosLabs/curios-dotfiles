@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.42.0"
+readonly SCRIPT_VERSION="0.43.0"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SET_LOCALE=0
