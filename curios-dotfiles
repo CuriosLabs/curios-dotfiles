@@ -64,19 +64,24 @@ ${GREY}EXAMPLES:${NC}
   exit
 }
 
-#------------- Expand a leading ~/ against a root directory
+#------------- Replace a leading ~, $HOME or ${HOME} with root; leave other paths unchanged
 expand_tilde() {
   local path="$1"
   local root="${2%/}"
-  local tilde
-  tilde=$(printf '~')
-  if [ "${path#"$tilde"/}" != "$path" ]; then
-    printf '%s/%s\n' "$root" "${path#"$tilde"/}"
-  elif [ "$path" = "$tilde" ]; then
-    printf '%s\n' "$root"
-  else
-    printf '%s\n' "$path"
-  fi
+  local prefix
+
+  for prefix in '~' "\$HOME" "\${HOME}"; do
+    if [ "$path" = "$prefix" ]; then
+      printf '%s\n' "$root"
+      return
+    fi
+    if [ "${path#"$prefix"/}" != "$path" ]; then
+      printf '%s/%s\n' "$root" "${path#"$prefix"/}"
+      return
+    fi
+  done
+
+  printf '%s\n' "$path"
 }
 
 #------------- Require theme config
@@ -196,24 +201,31 @@ apply_theme() {
 
   alacritty_theme=$(expand_tilde "$alacritty_theme" "$install_dir")
   ghostty_theme=$(expand_tilde "$ghostty_theme" "$install_dir")
-  cosmic_theme=$(expand_tilde "$cosmic_theme" "$HOME")
+  cosmic_theme=$(expand_tilde "$cosmic_theme" "$install_dir")
   wallpapers=$(expand_tilde "$wallpapers" "$install_dir")
 
-  printf "\e[32m Applying theme: %s...\e[0m\n" "$theme_name"
+  printf "\e[32m Applying theme: %s to %s\e[0m\n" "$theme_name" "$install_dir"
 
   # 1. Alacritty
+  echo -e "Alacritty: $alacritty_theme"
   if [ -n "$alacritty_theme" ] && [ -f "$alacritty_theme" ]; then
     cp "$alacritty_theme" "$install_dir/.config/alacritty/alacritty.toml"
+  else
+    echo -e "${RED}Alacritty theme could not be updated!${NC}"
   fi
 
   # 2. Ghostty
   if [ -n "$ghostty_theme" ] && [ -f "$ghostty_theme" ]; then
     cp "$ghostty_theme" "$install_dir/.config/ghostty/theme.config"
+  else
+    echo -e "${RED}Ghostty theme could not be updated!${NC}"
   fi
 
   # 3. Neovim
   if [ -n "$nvim_theme" ] && [ -f "$install_dir/.config/nvim/lua/plugins/colorschemes.lua" ]; then
     sed -i "s/colorscheme = \".*\"/colorscheme = \"$nvim_theme\"/" "$install_dir/.config/nvim/lua/plugins/colorschemes.lua"
+  else
+    echo -e "${RED}Neovim theme could not be updated!${NC}"
   fi
 
   # 4. Zed
@@ -225,6 +237,8 @@ apply_theme() {
       sed -i "s/\"mode\": \".*\"/\"mode\": \"dark\"/" "$install_dir/.config/zed/settings.json"
       sed -i "s/\"dark\": \".*\"/\"dark\": \"$zed_theme\"/" "$install_dir/.config/zed/settings.json"
     fi
+  else
+    echo -e "${RED}Zed editor theme could not be updated!${NC}"
   fi
 
   # 5. Brave Browser (Manual Reference)
@@ -235,20 +249,28 @@ apply_theme() {
       sudo chown 1000:100 "$bravethemespolicyfile"
     fi
     jq -n --arg color "$color_theme" '{ "BrowserThemeColor": $color }' >"$bravethemespolicyfile"
+  else
+    echo -e "${YELLOW}Brave browser theme color could not be updated!${NC}"
   fi
 
-  # 6. COSMIC desktop
-  if [ -n "$cosmic_theme" ] && command -v cosmic-settings >/dev/null 2>&1; then
-    cosmic-settings appearance import "$cosmic_theme"
-  fi
-
-  # 7. COSMIC wallpapers
+  # 6. COSMIC wallpapers
   if [ -n "$wallpapers" ]; then
     mkdir -p "$(dirname "$wallpaper_file")"
     printf 'Some("%s")\n' "$wallpapers" >"$wallpaper_file"
     if [ -f "$background_file" ]; then
       sed -i "s|source: Path(\".*\")|source: Path(\"$wallpapers\")|" "$background_file"
+    else
+      echo -e "${RED}COSMIC wallpaper source could not be updated!${NC}"
     fi
+  else
+    echo -e "${YELLOW}Wallpapers could not be updated!${NC}"
+  fi
+
+  # 7. COSMIC desktop
+  if [ -n "$cosmic_theme" ] && command -v cosmic-settings >/dev/null 2>&1; then
+    cosmic-settings appearance import "$cosmic_theme"
+  else
+    echo -e "${RED}COSMIC theme could not be updated!${NC}"
   fi
 }
 

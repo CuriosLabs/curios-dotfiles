@@ -95,8 +95,8 @@ files, such as `LICENSE.txt`, are skipped. Subdirectories are kept.
 
 `themes/themes.json` lists the themes shown by `--list`. Each entry may set
 `alacritty_theme`, `ghostty_theme`, `zed`, `color`, `nvim`, `cosmic_theme`,
-and `wallpapers`. A path that starts with `~/` is expanded against the install
-directory. `cosmic_theme` is expanded against `$HOME`.
+and `wallpapers`. A path that starts with `~/` or `$HOME` is expanded against the
+install directory.
 
 ```text
 .
@@ -117,16 +117,16 @@ directory. `cosmic_theme` is expanded against `$HOME`.
 
 ```json
 {
-  "version": "0.2",
+  "version": "0.4",
   "themes": {
     "One Dark": {
-      "alacritty_theme": "~/.config/alacritty/One-Dark.toml",
-      "ghostty_theme": "~/.config/ghostty/One-Dark.config",
+      "alacritty_theme": "$HOME/.config/alacritty/One-Dark.toml",
+      "ghostty_theme": "$HOME/.config/ghostty/One-Dark.config",
       "zed": "One-Dark",
       "color": "#20252c",
       "nvim": "onedark",
-      "cosmic_theme": "~/.curios/themes/One-Dark.ron",
-      "wallpapers": "~/.curios/wallpapers/one-dark/"
+      "cosmic_theme": "$HOME/.curios/themes/One-Dark.ron",
+      "wallpapers": "$HOME/.curios/wallpapers/one-dark/"
     }
   }
 }
