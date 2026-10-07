@@ -10,9 +10,9 @@ It does **not** ship application configs. There is no `.config/`, `themes/`,
 
 ## Project Overview
 
-- **Purpose**: Retrieve dotfiles from a Git repository (such as
-  [curios-themes](https://github.com/CuriosLabs/curios-themes)), apply themes,
-  and set the COSMIC keyboard layout.
+- **Purpose**: Clone dotfiles, themes, and wallpapers from a Git repository
+  (such as [curios-themes](https://github.com/CuriosLabs/curios-themes)) with
+  `--upgrade`, apply a theme, and set the COSMIC keyboard layout.
 - **Main logic**: The Bash script `curios-dotfiles`.
 - **Packaging**: Nix (`default.nix`, `pkgs/curios-dotfiles/default.nix`).
 - **Command runner**: `just`, always via the dev shell:
@@ -25,15 +25,17 @@ curios-dotfiles [options] <directory>
 ```
 
 `<directory>` is where dotfiles are copied (`$HOME`, `/etc/skel`, …).
-It must already exist. `--help`, `--version`, and `--list` exit before that
-check.
+It must already exist. `--help`, `--version`, `--list`, and `--info` exit
+before that check. `--upgrade` does not.
 
 | Option | Meaning |
 | --- | --- |
 | `-h`, `--help` | Print usage and exit. |
+| `--info` | Print the Git URL, branch, and revision, then exit. |
 | `--lang LANG` | COSMIC keyboard layout. Default: `us`. |
 | `--list` | List themes from the theme config and exit. |
 | `--themes THEME` | Apply a theme, for example `One Dark`. |
+| `--upgrade` | Clone the configured Git repository and copy it into `<directory>`. |
 | `-v`, `--verbose` | Print more information. |
 | `--version` | Print the version and exit. |
 
@@ -43,13 +45,12 @@ not from this repository. `jq` is required to read that file.
 
 ```bash
 curios-dotfiles --list
+curios-dotfiles --info
+curios-dotfiles --upgrade "$HOME"
 curios-dotfiles --themes "One Dark" "$HOME"
 curios-dotfiles --lang fr --themes "One Dark" "$HOME"
-sudo curios-dotfiles /etc/skel/
+sudo curios-dotfiles --upgrade /etc/skel/
 ```
-
-`--lang` is parsed, but the COSMIC layout write is currently commented out in
-the script. Do not document it as applied until that line is restored.
 
 ## Repository Layout
 
@@ -69,14 +70,51 @@ run the working tree. `just test` runs `./curios-dotfiles` and forwards argument
 Edit `curios-dotfiles` only. Keep it `shellcheck`-clean: `readonly` for
 constants, `local` for function variables.
 
+### Dotfiles and `--upgrade`
+
+This repository does not contain the dotfiles. `--info` and `--upgrade` read
+the source from the running NixOS configuration:
+
+- `curios.core.dotfiles.url`
+- `curios.core.dotfiles.branch`
+- `curios.core.dotfiles.revision`
+
+`--upgrade` clones `url` at `branch` (`--single-branch --depth 1`) into a
+temporary directory and deletes that clone on exit. It does not check out
+`revision`. `verify_commit_signature` exists but is not called.
+
+The clone must contain `dotfiles/`, `themes/themes.json`, and `wallpapers/`.
+Otherwise the script exits with `Not a valid CuriOS theme!`.
+
+| Source | Destination |
+| --- | --- |
+| `dotfiles/` | `<directory>/`, including hidden files |
+| `themes/` | `<directory>/.curios/themes/` |
+| `wallpapers/` | `<directory>/.curios/wallpapers/` |
+
+Only `.jpg`, `.jpeg`, and `.png` files are copied from `wallpapers/`.
+Subdirectories are kept. `cp -a` overwrites existing files and does not delete
+anything else. `--upgrade` does not apply a theme. If `--themes` is also
+passed, the upgrade runs first.
+
+`--list` and `--themes` always read `$HOME/.curios/themes/themes.json`, not
+`<directory>`. Upgrading `/etc/skel` does not change the current user's theme
+list.
+
+To use another repository, set `curios.core.dotfiles.url` (an SSH URL for a
+private repo; do not put a token in the option) and optionally `.branch` with
+`curios-update`, run `curios-update --update`, then
+`curios-dotfiles --upgrade <directory>`. The user who runs `--upgrade` must
+already be able to clone that URL.
+
 ### Themes
 
 Add or edit themes in `$HOME/.curios/themes/themes.json` (or the
 [curios-themes](https://github.com/CuriosLabs/curios-themes) repo), under
 `.themes`. Each entry may set `alacritty_theme`, `ghostty_theme`, `zed`,
-`color`, `nvim`, `cosmic_theme`, and `wallpapers`. Paths may
-start with `~/` and are expanded against the install directory (`cosmic_theme`
-is expanded against `$HOME`).
+`color`, `nvim`, `cosmic_theme`, and `wallpapers`. A path that starts with
+`~`, `$HOME`, or `${HOME}` is expanded against the install directory.
+Anything else is left unchanged.
 
 `apply_theme` writes into the target directory for Alacritty, Ghostty,
 Neovim, Zed, Brave (`/etc/brave/policies/managed/themes.json`),
