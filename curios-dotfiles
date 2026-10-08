@@ -204,7 +204,7 @@ apply_theme() {
   cosmic_theme=$(expand_tilde "$cosmic_theme" "$install_dir")
   wallpapers=$(expand_tilde "$wallpapers" "$install_dir")
 
-  printf "\e[32m Applying theme: %s to %s\e[0m\n" "$theme_name" "$install_dir"
+  echo -e "${GREEN}Applying theme: $theme_name to $install_dir${NC}"
 
   # 1. Alacritty
   echo -e "Alacritty: $alacritty_theme"
@@ -351,7 +351,7 @@ fi
 
 #------------- Check <directory>
 if [ ! -d "$INSTALL_DIR" ]; then
-  printf "\e[31mDirectory argument is invalid!\e[0m\n"
+  echo -e "${RED}Directory argument is invalid!${NC}"
   exit 2
 fi
 
