@@ -13,7 +13,7 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-f/PNodCnqjD2P9hQG0R81kwcFd4y7L9PLnaMzJaKmNY=";
   };
 
-  buildInputs = [ pkgs.git pkgs.gnused pkgs.jq ];
+  buildInputs = [ pkgs.cosmic-settings pkgs.git pkgs.gnused pkgs.jq ];
   nativeBuildInputs = [ makeWrapper ];
   dontConfigure = true;
   dontBuild = true;
