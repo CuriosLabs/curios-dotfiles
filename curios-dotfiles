@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.43.1"
+readonly SCRIPT_VERSION="0.43.2"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SET_LOCALE=0
@@ -37,9 +37,9 @@ ${GREY}USAGE:${NC}
 
 ${GREY}OPTIONS:${NC}
   ${GREY}-h, --help${NC}         Print this message.
-  ${GREY}--lang LANG${NC}        Set the COSMIC keyboard layout. Default: 'us'.
+  ${GREY}--lang ${YELLOW}LANG${NC}        Set the COSMIC keyboard layout. Default: 'us'.
   ${GREY}--list${NC}             List themes from the theme config and exit.
-  ${GREY}--themes THEME${NC}     Apply a theme from the theme config, for example 'One Dark'.
+  ${GREY}--themes ${YELLOW}THEME${NC}     Apply a theme from the theme config, for example 'One Dark'.
   ${GREY}--info${NC}             Print information about the Git repository used to source dotfiles and themes.
   ${GREY}--upgrade${NC}          Upgrade dotfiles and themes from their Git repository.
   ${GREY}-v, --verbose${NC}      Print more information.
@@ -52,10 +52,10 @@ ${GREY}EXAMPLES:${NC}
       ${GREY}curios-dotfiles --list${NC}
     Apply the "One Dark" theme to your home directory:
       ${GREY}curios-dotfiles --themes \"One Dark\" $HOME ${NC}
-    Upgrade dotfiles and themes from Git and install them into your home directory:
-      ${GREY}curios-dotfiles --upgrade $HOME ${NC}
     Print information about the dotfiles Git repository:
       ${GREY}curios-dotfiles --info${NC}
+    Upgrade dotfiles and themes from Git and install them into your home directory:
+      ${GREY}curios-dotfiles --upgrade $HOME ${NC}
     Set the COSMIC keyboard layout to French:
       ${GREY}curios-dotfiles --lang fr $HOME ${NC}
     Install as a skeleton for future users' home directories:
