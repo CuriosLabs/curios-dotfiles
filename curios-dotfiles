@@ -7,7 +7,7 @@
 set -eu
 
 #------------- Variables init
-readonly SCRIPT_VERSION="0.43.2"
+readonly SCRIPT_VERSION="0.43.3"
 VERBOSE=0
 LOCALE_KEYBOARD="us"
 SET_LOCALE=0
@@ -100,11 +100,11 @@ require_theme_config() {
 print_info() {
   local git_repo
   local git_branch
-  local git_rev
+  #local git_rev
   git_repo=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.url')
   git_branch=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.branch')
-  git_rev=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.revision')
-  echo -e "${GREEN}Git source:${NC} $git_repo ${GREEN}on branch:${NC} $git_branch ${GREEN}at revision:${NC} $git_rev"
+  #git_rev=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.revision')
+  echo -e "${GREEN}Git source:${NC} $git_repo ${GREEN}on branch:${NC} $git_branch"
 }
 
 #------------- Upgrade dotfiles from Git repo
@@ -120,10 +120,10 @@ verify_commit_signature() {
 upgrade_dotfiles() {
   local git_repo
   local git_branch
-  local git_rev
+  #local git_rev
   git_repo=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.url')
   git_branch=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.branch')
-  git_rev=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.revision')
+  #git_rev=$(nix-instantiate --eval --raw --expr '(import <nixpkgs/nixos> {}).config.curios.core.dotfiles.revision')
 
   EXTRACTED_SOURCE_PATH=$(mktemp -d -t curios-dotfiles-XXXXXX)
   trap 'rm -rf -- "$EXTRACTED_SOURCE_PATH"' EXIT
